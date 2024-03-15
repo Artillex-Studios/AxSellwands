@@ -1,0 +1,32 @@
+# what plugin to use for these things?
+# if you need another plugin supported, please contact us on discord
+# Note: custom should only be used if you have a plugin that uses the API to add a custom hook
+hooks:
+  # values: Vault, PlayerPoints, CoinsEngine, RoyaleEconomy, custom
+  economy-plugin: "Vault"
+  # values: builtin, AxGens, ShopGUIPlus, Essentials, EconomyShopGUI, CMI, custom
+  price-plugin: "builtin"
+
+hook-settings:
+  # economy
+  CoinsEngine:
+    currency-name: "coins"
+  # protection
+  GriefPrevention:
+    register: true
+  IridiumSkyBlock:
+    register: true
+  Kingdoms:
+    register: true
+  SuperiorSkyblock2:
+    register: true
+  Lands:
+    register: true
+  Residence:
+    register: true
+  # other
+  PlaceholderAPI:
+    register: true
+
+# do not change this
+version: 1

@@ -1,0 +1,27 @@
+name: AxSellwands
+version: '${project.version}'
+main: com.artillexstudios.axsellwands.AxSellwands
+api-version: '1.13'
+folia-supported: true
+
+softdepend:
+  - AxGens
+  - Vault
+  - PlayerPoints
+  - Kingdoms
+  - Essentials
+  - ShopGUIPlus
+  - EconomyShopGUI
+  - EconomyShopGUI-Premium
+  - CMI
+  - CoinsEngine
+  - PlaceholderAPI
+  - PlotSquared
+  - Residence
+  - Lands
+  - GriefPrevention
+  - BentoBox
+  - Kingdoms
+  - WorldGuard
+  - SuperiorSkyblock2
+  - IridiumSkyBlock

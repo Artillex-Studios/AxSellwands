@@ -1,0 +1,28 @@
+name: "&#EE0000Unlimited Sellwand"
+
+item:
+  material: BLAZE_ROD
+  glow: true
+  name: "&#EE0000&lᴜɴʟɪᴍɪᴛᴇᴅ sᴇʟʟᴡᴀɴᴅ &7(100%)"
+  lore:
+    - ""
+    - "&#EE0000ɪɴғᴏ"
+    - " &8❙ &fMultiplier: &#EE0000%multiplier%x"
+    - " &8❙ &fUses: &#EE0000%uses%/%max-uses%"
+    - ""
+    - "&#EE0000sᴛᴀᴛs"
+    - " &8❙ &fSold items: &#EE0000%sold-amount%"
+    - " &8❙ &fMoney made: &#EE0000%sold-price%$"
+    - ""
+    - "&#EE0000&l> &#EE0000Left Click &8- &#EE0000Inspect"
+    - "&#EE0000&l> &#EE0000Right Click &8- &#EE0000Sell"
+
+# 1.0 is 100%, 1.5 is 150% and so on...
+multiplier: 1.0
+
+# set to -1 to make it infinite
+uses: -1
+
+# how often should the player be able to sell
+# set to 0 to disable
+cooldown-miliseconds: 3000

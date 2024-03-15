@@ -1,0 +1,28 @@
+prefix: "<gradient:#FF5500:#FF7700><bold>AxSellwands</gradient> &7» "
+
+# modes:
+# 0 - disallow stacking
+# 1 - merge the 2 sell wands together (max usage and multiplier will not increase)
+# 2 - ignore (not recommended)
+stacking-mode: 1
+
+number-formatting:
+  # modes:
+  # 0 - formatted (customizable, look at the formatted part)
+  # 1 - short (1K)
+  # 2 - raw (1000.4242421412)
+  mode: 0
+  # https://docs.oracle.com/javase/tutorial/i18n/format/decimalFormat.html
+  formatted: "#,###.##"
+  # format: language_COUNTRY
+  short: "en_US"
+
+# requires minecraft 1.18+
+hologram:
+  enabled: true
+  # how long should the hologram stay
+  # 20 ticks = 1 second
+  stay-time-ticks: 60
+
+# do not change this
+version: 1

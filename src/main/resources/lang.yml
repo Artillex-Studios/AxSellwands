@@ -1,0 +1,65 @@
+help:
+  - " "
+  - "&#FF5500&lAxSellwands &7»"
+  - " &7- &f/axsellwands reload &7| &#FF5500Reload plugin"
+  - " &7- &f/axsellwands give <player> <sellwand> [amount] &7| &#FF5500Give sellwands"
+  - " "
+
+unlimited: "∞"
+
+reload:
+  success: "&#33FF33Plugin successfully reloaded!"
+  failed: "&#FF3333Failed to reload the plugin! Something is wrong in the &f%file%&#FF3333 file, look in the console or use a yaml validator to fix the errors!"
+
+sellwand-give: "&#FFAA55You have given &f%amount%x %sellwand% &#FFAA55to &f%player%&#FFAA55!"
+sellwand-got: "&#FFAA55You have received &f%amount%x %sellwand%&#FFAA55!"
+
+nothing-sold: "&#FFAA55Nothing in the container is sellable!"
+
+cooldown: "&#FFAA55You must wait another &f%time% seconds &#FFAA55before using this sellwand again!"
+
+no-permission: "&#FFAA55You don't have a permission to use a sellwant on this chest!"
+
+disallowed-container: "&#FFAA55This sellwand can't be used on this type of container!"
+
+# list of sounds: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Sound.html
+# set to "" to mute
+sounds:
+  sell: "ENTITY_VILLAGER_YES"
+  inspect: ""
+
+# list of particles: https://hub.spigotmc.org/javadocs/spigot/org/bukkit/Particle.html
+# set to "" to disable
+particles:
+  sell: "VILLAGER_HAPPY"
+  inspect: "DRIPPING_HONEY"
+
+# set to "" to disable
+sell:
+  chat: "&#FFAA55Sold &f%amount% &#FFAA55items for &f%price%$&#FFAA55!"
+  actionbar: "&#FFAA55Sold &f%amount% &#FFAA55items for &f%price%$&#FFAA55!"
+  title:
+    # &#FFAA55Sold &f%amount% &#FFAA55items
+    title: ""
+    # &#DDDDDD+%price%$
+    subtitle: ""
+
+# set to "" to disable
+inspect:
+  chat: "&#FFAA55The container has &f%amount% &#FFAA55sellable items with a total sell price of &f%price%$&#FFAA55!"
+  actionbar: "&#FFAA55The container has &f%amount% &#FFAA55sellable items with a total sell price of &f%price%$&#FFAA55!"
+  title:
+    title: "&f%amount%x &#FFAA55items &#DDDDDD| &f%price% &#FFAA55sell price"
+    subtitle: "&#DDDDDDInspected container"
+
+stack:
+  success: "&#FFAA55You have successfully merged two sellwands!"
+  cant-stack: "&#FFAA55These sellwands cannont be stacked together!"
+  confirm: "&#FFAA55You are about to merge two sellwands, note that their max usage will not stack! Click again to confirm!"
+
+sell-hologram:
+  - "&#FFAA55Sold &f%amount% &#FFAA55items"
+  - "&#DDDDDD+%price%$"
+
+# do not change this
+version: 1

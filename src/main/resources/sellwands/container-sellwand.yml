@@ -1,0 +1,40 @@
+name: "&#8855FFEnderChest Sellwand"
+
+item:
+  material: STICK
+  glow: true
+  name: "&#8855FF&lᴇɴᴅᴇʀᴄʜᴇsᴛ sᴇʟʟᴡᴀɴᴅ &7(150%)"
+  lore:
+    - ""
+    - "&#8855FFɪɴғᴏ"
+    - " &8❙ &fMultiplier: &#8855FF%multiplier%x"
+    - " &8❙ &fUses: &#8855FF%uses%/%max-uses%"
+    - ""
+    - "&#8855FFsᴛᴀᴛs"
+    - " &8❙ &fSold items: &#8855FF%sold-amount%"
+    - " &8❙ &fMoney made: &#8855FF%sold-price%$"
+    - ""
+    - "&#8855FFᴀʟʟᴏᴡᴇᴅ ᴄᴏɴᴛᴀɪɴᴇʀs"
+    - " &8❙ &fEnder Chest"
+    - ""
+    - "&#8855FF&l> &#8855FFLeft Click &8- &#8855FFInspect"
+    - "&#8855FF&l> &#8855FFRight Click &8- &#8855FFSell"
+
+# 1.0 is 100%, 1.5 is 150% and so on...
+multiplier: 1.5
+
+# set to -1 to make it infinite
+uses: 100
+
+# how often should the player be able to sell
+# set to 0 to disable
+cooldown-miliseconds: 5000
+
+# values: CHEST, TRAPPED_CHEST, ENDER_CHEST, all SHULKER_BOX-es, FURNACE, BLAST_FURNACE, BARREL, HOPPER, SMOKER, DISPENSER, DROPPER
+# containers where you can use sell wands, don't use both allowed-containers and disallowed-containers at once
+allowed-containers:
+  - ENDER_CHEST
+
+# values: CHEST, TRAPPED_CHEST, ENDER_CHEST, all SHULKER_BOX-es, FURNACE, BLAST_FURNACE, BARREL, HOPPER, SMOKER, DISPENSER, DROPPER
+# containers where you can't use sell wands, don't use both allowed-containers and disallowed-containers at once
+disallowed-containers: []

@@ -1,0 +1,28 @@
+name: "&#FF5500Normal Sellwand"
+
+item:
+  material: STICK
+  glow: true
+  name: "&#FF5500&lsᴇʟʟᴡᴀɴᴅ &7(100%)"
+  lore:
+    - ""
+    - "&#FF5500ɪɴғᴏ"
+    - " &8❙ &fMultiplier: &#FF5500%multiplier%x"
+    - " &8❙ &fUses: &#FF5500%uses%/%max-uses%"
+    - ""
+    - "&#FF5500sᴛᴀᴛs"
+    - " &8❙ &fSold items: &#FF5500%sold-amount%"
+    - " &8❙ &fMoney made: &#FF5500%sold-price%$"
+    - ""
+    - "&#FF5500&l> &#FF5500Left Click &8- &#FF5500Inspect"
+    - "&#FF5500&l> &#FF5500Right Click &8- &#FF5500Sell"
+
+# 1.0 is 100%, 1.5 is 150% and so on...
+multiplier: 1.0
+
+# set to -1 to make it infinite
+uses: 100
+
+# how often should the player be able to sell
+# set to 0 to disable
+cooldown-miliseconds: 0

@@ -1,0 +1,6 @@
+# NOTE: this file is only useful if you use the builtin price system
+
+# format: MATERIAL: price
+# list of materials: https://hub.spigotmc.org/javadocs/bukkit/org/bukkit/Material.html
+COBBLESTONE: 1.0
+OAK_LOG: 2.5

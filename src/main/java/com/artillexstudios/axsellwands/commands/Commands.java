@@ -1,0 +1,108 @@
+package com.artillexstudios.axsellwands.commands;
+
+import com.artillexstudios.axapi.utils.ContainerUtils;
+import com.artillexstudios.axapi.utils.ItemBuilder;
+import com.artillexstudios.axapi.utils.StringUtils;
+import com.artillexstudios.axsellwands.commands.annotations.Sellwands;
+import com.artillexstudios.axsellwands.hooks.HookManager;
+import com.artillexstudios.axsellwands.sellwands.Sellwand;
+import com.artillexstudios.axsellwands.utils.NBTUtils;
+import com.artillexstudios.axsellwands.utils.NumberUtils;
+import org.bukkit.Bukkit;
+import org.bukkit.command.CommandSender;
+import org.bukkit.entity.Player;
+import org.bukkit.inventory.ItemStack;
+import org.jetbrains.annotations.NotNull;
+import revxrsal.commands.annotation.Command;
+import revxrsal.commands.annotation.DefaultFor;
+import revxrsal.commands.annotation.Optional;
+import revxrsal.commands.annotation.Range;
+import revxrsal.commands.annotation.Subcommand;
+import revxrsal.commands.bukkit.annotation.CommandPermission;
+
+import java.util.HashMap;
+import java.util.List;
+import java.util.Map;
+import java.util.UUID;
+
+import static com.artillexstudios.axsellwands.AxSellwands.CONFIG;
+import static com.artillexstudios.axsellwands.AxSellwands.LANG;
+import static com.artillexstudios.axsellwands.AxSellwands.MESSAGEUTILS;
+
+@Command({"axsellwands", "axsellwand", "sellwands", "sellwand"})
+@CommandPermission("axsellwands.admin")
+public class Commands {
+
+    @DefaultFor({"~", "~ help"})
+    public void help(@NotNull CommandSender sender) {
+        for (String m : LANG.getStringList("help")) {
+            sender.sendMessage(StringUtils.formatToString(m));
+        }
+    }
+
+    @Subcommand("give")
+    public void give(@NotNull CommandSender sender, Player player, @Sellwands @NotNull Sellwand sellwand, @Optional @Range(min = 1, max = 64) Integer amount) {
+
+        float multiplier = sellwand.getMultiplier();
+        int uses = sellwand.getUses();
+
+        final Map<String, String> replacements = new HashMap<>();
+        replacements.put("%multiplier%", "" + multiplier);
+        replacements.put("%uses%", "" + (uses == -1 ? LANG.getString("unlimited", "∞") : uses));
+        replacements.put("%max-uses%", "" + (uses == -1 ? LANG.getString("unlimited", "∞") : uses));
+        replacements.put("%sold-amount%", "" + 0);
+        replacements.put("%sold-price%", "" + 0);
+
+        final ItemBuilder builder = new ItemBuilder(sellwand.getItemSection(), replacements);
+        final ItemStack it = builder.get();
+
+        NBTUtils.writeToNBT(it, "axsellwands-type", sellwand.getId());
+        NBTUtils.writeToNBT(it, "axsellwands-multiplier", multiplier);
+        NBTUtils.writeToNBT(it, "axsellwands-lastused", 0L);
+        NBTUtils.writeToNBT(it, "axsellwands-uses", uses);
+        NBTUtils.writeToNBT(it, "axsellwands-max-uses", uses);
+        NBTUtils.writeToNBT(it, "axsellwands-sold-amount", 0);
+        NBTUtils.writeToNBT(it, "axsellwands-sold-price", 0D);
+
+        int am = 1;
+        if (amount != null) am = amount;
+
+        for (int i = 0; i < am; i++) {
+            if (CONFIG.getInt("stacking-mode", 0) != 2)
+                NBTUtils.writeToNBT(it, "axsellwands-uuid", UUID.randomUUID());
+            ContainerUtils.addOrDrop(player.getInventory(), List.of(it.clone()), player.getLocation());
+        }
+
+        replacements.put("%amount%", "" + am);
+        replacements.put("%sellwand%", sellwand.getName());
+        replacements.put("%player%", player.getName());
+
+        MESSAGEUTILS.sendLang(sender, "sellwand-give", replacements);
+        MESSAGEUTILS.sendLang(player, "sellwand-got", replacements);
+    }
+
+    @Subcommand("reload")
+    public void reload(@NotNull CommandSender sender) {
+        Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500[AxRewards] &#FFAAAAReloading configuration..."));
+        if (!CONFIG.reload()) {
+            MESSAGEUTILS.sendFormatted(sender, "reload.failed", Map.of("%file%", "config.yml"));
+            return;
+        }
+        Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500╠ &#FFEEAAReloaded &fconfig.yml&#FFEEAA!"));
+
+        if (!LANG.reload()) {
+            MESSAGEUTILS.sendFormatted(sender, "reload.failed", Map.of("%file%", "lang.yml"));
+            return;
+        }
+        Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500╠ &#FFEEAAReloaded &flang.yml&#FFEEAA!"));
+
+        com.artillexstudios.axsellwands.sellwands.Sellwands.reload();
+        Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500╠ &#FFEEAALoaded &f" + com.artillexstudios.axsellwands.sellwands.Sellwands.getSellwands().size() + " &#FFEEAAsellwands!"));
+
+        HookManager.updateHooks();
+        NumberUtils.reload();
+
+        Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500╚ &#FFEEAASuccessful reload!"));
+        MESSAGEUTILS.sendLang(sender, "reload.success");
+    }
+}
