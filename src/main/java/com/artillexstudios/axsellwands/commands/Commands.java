@@ -26,6 +26,7 @@ import java.util.Map;
 import java.util.UUID;
 
 import static com.artillexstudios.axsellwands.AxSellwands.CONFIG;
+import static com.artillexstudios.axsellwands.AxSellwands.HOOKS;
 import static com.artillexstudios.axsellwands.AxSellwands.LANG;
 import static com.artillexstudios.axsellwands.AxSellwands.MESSAGEUTILS;
 
@@ -95,6 +96,12 @@ public class Commands {
             return;
         }
         Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500╠ &#FFEEAAReloaded &flang.yml&#FFEEAA!"));
+
+        if (!HOOKS.reload()) {
+            MESSAGEUTILS.sendFormatted(sender, "reload.failed", Map.of("%file%", "hooks.yml"));
+            return;
+        }
+        Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500╠ &#FFEEAAReloaded &fhooks.yml&#FFEEAA!"));
 
         com.artillexstudios.axsellwands.sellwands.Sellwands.reload();
         Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500╠ &#FFEEAALoaded &f" + com.artillexstudios.axsellwands.sellwands.Sellwands.getSellwands().size() + " &#FFEEAAsellwands!"));

@@ -83,23 +83,23 @@ public class SellwandUseListener implements Listener {
         int newSoldAmount = 0;
         double newSoldPrice = 0;
 
-        for (ItemStack it : contents) {
-            if (it == null) continue;
-            double price = HookManager.getShopPrices().getPrice(player, it);
-            if (price == -1.0D) continue;
-            price *= multiplier;
-
-            newSoldPrice += price;
-            newSoldAmount += it.getAmount();
-
-            it.setAmount(0);
-        }
-
-        final HashMap<String, String> replacements = new HashMap<>();
-        replacements.put("%amount%", "" + newSoldAmount);
-        replacements.put("%price%", NumberUtils.formatNumber(newSoldPrice));
-
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            for (ItemStack it : contents) {
+                if (it == null) continue;
+                double price = HookManager.getShopPrices().getPrice(player, it);
+                if (price == -1.0D) continue;
+                price *= multiplier;
+
+                newSoldPrice += price;
+                newSoldAmount += it.getAmount();
+
+                it.setAmount(0);
+            }
+
+            final HashMap<String, String> replacements = new HashMap<>();
+            replacements.put("%amount%", "" + newSoldAmount);
+            replacements.put("%price%", NumberUtils.formatNumber(newSoldPrice));
+
             if (newSoldAmount == 0) {
                 MESSAGEUTILS.sendLang(player, "nothing-sold");
                 return;
@@ -164,6 +164,20 @@ public class SellwandUseListener implements Listener {
             NBTUtils.writeToNBT(event.getItem(), "axsellwands-multiplier", multiplier);
             NBTUtils.writeToNBT(event.getItem(), "axsellwands-max-uses", maxUses);
         } else {
+            for (ItemStack it : contents) {
+                if (it == null) continue;
+                double price = HookManager.getShopPrices().getPrice(player, it);
+                if (price == -1.0D) continue;
+                price *= multiplier;
+
+                newSoldPrice += price;
+                newSoldAmount += it.getAmount();
+            }
+
+            final HashMap<String, String> replacements = new HashMap<>();
+            replacements.put("%amount%", "" + newSoldAmount);
+            replacements.put("%price%", NumberUtils.formatNumber(newSoldPrice));
+
             MESSAGEUTILS.sendLang(player, "inspect.chat", replacements);
 
             if (!LANG.getString("inspect.actionbar", "").isBlank()) {

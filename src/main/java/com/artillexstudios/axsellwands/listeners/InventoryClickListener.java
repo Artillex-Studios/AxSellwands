@@ -1,5 +1,6 @@
 package com.artillexstudios.axsellwands.listeners;
 
+import com.artillexstudios.axapi.utils.Cooldown;
 import com.artillexstudios.axapi.utils.ItemBuilder;
 import com.artillexstudios.axsellwands.sellwands.Sellwand;
 import com.artillexstudios.axsellwands.sellwands.Sellwands;
@@ -14,14 +15,13 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.UUID;
-import java.util.WeakHashMap;
 
 import static com.artillexstudios.axsellwands.AxSellwands.CONFIG;
 import static com.artillexstudios.axsellwands.AxSellwands.LANG;
 import static com.artillexstudios.axsellwands.AxSellwands.MESSAGEUTILS;
 
 public class InventoryClickListener implements Listener {
-    private final WeakHashMap<Player, Long> cooldown = new WeakHashMap<>();
+    private final Cooldown<Player> cooldown = new Cooldown<>();
 
     @EventHandler(ignoreCancelled = true)
     public void onClick(@NotNull InventoryClickEvent event) {
@@ -57,44 +57,43 @@ public class InventoryClickListener implements Listener {
         }
 
         event.setCancelled(true);
-        if (cooldown.containsKey(player) && System.currentTimeMillis() - cooldown.get(player) < 3_000L) {
-            final int maxUses2 = NBTUtils.readIntegerFromNBT(event.getCursor(), "axsellwands-max-uses");
-            final int soldAmount2 = NBTUtils.readIntegerFromNBT(event.getCursor(), "axsellwands-sold-amount");
-            final double soldPrice2 = NBTUtils.readDoubleFromNBT(event.getCursor(), "axsellwands-sold-price");
-
-            int newMax = Math.max(maxUses1, maxUses2);
-            int newUses = Math.min(newMax, (uses1 + uses2));
-            int newSoldAmount = soldAmount1 + soldAmount2;
-            double newSoldPrice = soldPrice1 + soldPrice2;
-
-            final HashMap<String, String> replacements = new HashMap<>();
-            replacements.put("%multiplier%", "" + multiplier1);
-            replacements.put("%uses%", "" + (newUses == -1 ? LANG.getString("unlimited", "∞") : newUses));
-            replacements.put("%max-uses%", "" + (newMax == -1 ? LANG.getString("unlimited", "∞") : newMax));
-            replacements.put("%sold-amount%", "" + (newSoldAmount));
-            replacements.put("%sold-price%", NumberUtils.formatNumber(newSoldPrice));
-
-            final Sellwand wand = Sellwands.getSellwands().get(type1);
-            final ItemBuilder builder = new ItemBuilder(wand.getItemSection(), replacements);
-
-            event.getCurrentItem().setItemMeta(builder.get().getItemMeta());
-
-            NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-uuid", uuid1);
-            NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-uses", newUses);
-            NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-max-uses", newMax);
-            NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-sold-amount", newSoldAmount);
-            NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-sold-price", newSoldPrice);
-            NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-lastused", System.currentTimeMillis());
-            NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-type", type1);
-            NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-multiplier", multiplier1);
-
-
-            MESSAGEUTILS.sendLang(player, "stack.success");
-            event.getCursor().setAmount(0);
+        if (!cooldown.hasCooldown(player)) {
+            MESSAGEUTILS.sendLang(player, "stack.confirm");
+            cooldown.addCooldown(player, 3_000L);
             return;
         }
 
-        MESSAGEUTILS.sendLang(player, "stack.confirm");
-        cooldown.put(player, System.currentTimeMillis());
+        final int maxUses2 = NBTUtils.readIntegerFromNBT(event.getCursor(), "axsellwands-max-uses");
+        final int soldAmount2 = NBTUtils.readIntegerFromNBT(event.getCursor(), "axsellwands-sold-amount");
+        final double soldPrice2 = NBTUtils.readDoubleFromNBT(event.getCursor(), "axsellwands-sold-price");
+
+        int newMax = Math.max(maxUses1, maxUses2);
+        int newUses = Math.min(newMax, (uses1 + uses2));
+        int newSoldAmount = soldAmount1 + soldAmount2;
+        double newSoldPrice = soldPrice1 + soldPrice2;
+
+        final HashMap<String, String> replacements = new HashMap<>();
+        replacements.put("%multiplier%", "" + multiplier1);
+        replacements.put("%uses%", "" + (newUses == -1 ? LANG.getString("unlimited", "∞") : newUses));
+        replacements.put("%max-uses%", "" + (newMax == -1 ? LANG.getString("unlimited", "∞") : newMax));
+        replacements.put("%sold-amount%", "" + (newSoldAmount));
+        replacements.put("%sold-price%", NumberUtils.formatNumber(newSoldPrice));
+
+        final Sellwand wand = Sellwands.getSellwands().get(type1);
+        final ItemBuilder builder = new ItemBuilder(wand.getItemSection(), replacements);
+
+        event.getCurrentItem().setItemMeta(builder.get().getItemMeta());
+
+        NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-uuid", uuid1);
+        NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-uses", newUses);
+        NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-max-uses", newMax);
+        NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-sold-amount", newSoldAmount);
+        NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-sold-price", newSoldPrice);
+        NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-lastused", System.currentTimeMillis());
+        NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-type", type1);
+        NBTUtils.writeToNBT(event.getCurrentItem(), "axsellwands-multiplier", multiplier1);
+
+        MESSAGEUTILS.sendLang(player, "stack.success");
+        event.getCursor().setAmount(0);
     }
 }
