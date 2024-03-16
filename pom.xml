@@ -63,10 +63,6 @@
                                     <pattern>revxrsal.commands</pattern>
                                     <shadedPattern>com.artillexstudios.axsellwands.libs.lamp</shadedPattern>
                                 </relocation>
-                                <relocation>
-                                    <pattern>de.tr7zw.changeme.nbtapi</pattern>
-                                    <shadedPattern>com.artillexstudios.axsellwands.libs.nbtapi</shadedPattern>
-                                </relocation>
                             </relocations>
                         </configuration>
                     </execution>
@@ -144,7 +140,7 @@
         <dependency>
             <groupId>com.artillexstudios.axapi</groupId>
             <artifactId>axapi</artifactId>
-            <version>1.4.95</version>
+            <version>1.4.96</version>
             <scope>compile</scope>
             <exclusions>
                 <exclusion>
@@ -181,11 +177,6 @@
             <groupId>net.byteflux</groupId>
             <artifactId>libby-bukkit</artifactId>
             <version>1.2.0</version>
-        </dependency>
-        <dependency>
-            <groupId>de.tr7zw</groupId>
-            <artifactId>item-nbt-api</artifactId>
-            <version>2.12.2</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
