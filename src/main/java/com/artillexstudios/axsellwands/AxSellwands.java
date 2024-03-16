@@ -65,15 +65,6 @@ public final class AxSellwands extends AxPlugin {
         HookManager.setupHooks();
         NumberUtils.reload();
 
-//        switch (CONFIG.getString("database.type").toLowerCase()) {
-//            case "sqlite" -> database = new SQLite();
-//            case "mysql" -> database = new MySQL();
-//            case "postgresql" -> database = new PostgreSQL();
-//            default -> database = new H2();
-//        }
-//
-//        database.setup();
-
         final BukkitCommandHandler handler = BukkitCommandHandler.create(this);
 
         handler.getAutoCompleter().registerSuggestionFactory(parameter -> {
