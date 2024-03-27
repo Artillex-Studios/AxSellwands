@@ -182,7 +182,7 @@ public class HookManager {
             }
 
             case "ECONOMYSHOPGUI": {
-                if (Bukkit.getPluginManager().getPlugin("EconomoyShopGUI") != null || Bukkit.getPluginManager().getPlugin("EconomyShopGUI-Premium") != null) {
+                if (Bukkit.getPluginManager().getPlugin("EconomyShopGUI") != null || Bukkit.getPluginManager().getPlugin("EconomyShopGUI-Premium") != null) {
                     shopPrices = new EconomyShopGuiHook();
                     Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into EconomoyShopGUI!"));
                 } else {
