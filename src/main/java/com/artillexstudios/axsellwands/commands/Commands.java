@@ -84,7 +84,7 @@ public class Commands {
 
     @Subcommand("reload")
     public void reload(@NotNull CommandSender sender) {
-        Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500[AxRewards] &#FFAAAAReloading configuration..."));
+        Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500[AxSellwands] &#FFAAAAReloading configuration..."));
         if (!CONFIG.reload()) {
             MESSAGEUTILS.sendFormatted(sender, "reload.failed", Map.of("%file%", "config.yml"));
             return;
