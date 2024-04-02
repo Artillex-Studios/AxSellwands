@@ -24,6 +24,8 @@ hook-settings:
     register: true
   Residence:
     register: true
+  HuskTowns:
+    register: true
   # other
   PlaceholderAPI:
     register: true

@@ -9,6 +9,7 @@ import com.artillexstudios.axsellwands.hooks.currency.VaultHook;
 import com.artillexstudios.axsellwands.hooks.other.Placeholders;
 import com.artillexstudios.axsellwands.hooks.protection.BentoBoxHook;
 import com.artillexstudios.axsellwands.hooks.protection.GriefPreventionHook;
+import com.artillexstudios.axsellwands.hooks.protection.HuskTownsHook;
 import com.artillexstudios.axsellwands.hooks.protection.IridiumSkyBlockHook;
 import com.artillexstudios.axsellwands.hooks.protection.KingdomsXHook;
 import com.artillexstudios.axsellwands.hooks.protection.LandsHook;
@@ -90,6 +91,11 @@ public class HookManager {
         if (HOOKS.getBoolean("hook-settings.PlotSquared.register", true) && Bukkit.getPluginManager().getPlugin("PlotSquared") != null) {
             PROTECTION_HOOKS.add(new PlotSquaredHook());
             Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into PlotSquared!"));
+        }
+
+        if (HOOKS.getBoolean("hook-settings.HuskTowns.register", true) && Bukkit.getPluginManager().getPlugin("HuskTowns") != null) {
+            PROTECTION_HOOKS.add(new HuskTownsHook());
+            Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into HuskTowns!"));
         }
     }
 

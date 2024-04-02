@@ -6,7 +6,7 @@
 
     <groupId>com.artillexstudios</groupId>
     <artifactId>AxSellwands</artifactId>
-    <version>1.0.2</version>
+    <version>1.0.3</version>
     <packaging>jar</packaging>
 
     <name>AxSellwands</name>
@@ -121,6 +121,10 @@
         <repository>
             <id>bg-repo</id>
             <url>https://repo.bg-software.com/repository/api/</url>
+        </repository>
+        <repository>
+            <id>william278.net</id>
+            <url>https://repo.william278.net/releases</url>
         </repository>
     </repositories>
 
@@ -333,6 +337,12 @@
             <groupId>com.github.DeadSilenceIV</groupId>
             <artifactId>AdvancedChestsAPI</artifactId>
             <version>3.2-BETA</version>
+        </dependency>
+        <dependency>
+            <groupId>net.william278.husktowns</groupId>
+            <artifactId>husktowns-bukkit</artifactId>
+            <version>3.0.2</version>
+            <scope>provided</scope>
         </dependency>
     </dependencies>
 
