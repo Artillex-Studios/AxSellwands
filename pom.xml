@@ -6,7 +6,7 @@
 
     <groupId>com.artillexstudios</groupId>
     <artifactId>AxSellwands</artifactId>
-    <version>1.0.3</version>
+    <version>1.0.4</version>
     <packaging>jar</packaging>
 
     <name>AxSellwands</name>
@@ -125,6 +125,10 @@
         <repository>
             <id>william278.net</id>
             <url>https://repo.william278.net/releases</url>
+        </repository>
+        <repository>
+            <id>glaremasters repo</id>
+            <url>https://repo.glaremasters.me/repository/towny/</url>
         </repository>
     </repositories>
 
@@ -343,6 +347,19 @@
             <artifactId>husktowns-bukkit</artifactId>
             <version>3.0.2</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.palmergames.bukkit.towny</groupId>
+            <artifactId>towny</artifactId>
+            <version>0.100.1.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.sat7</groupId>
+            <artifactId>dynamicshop</artifactId>
+            <version>3.16.1</version>
+            <systemPath>${project.basedir}/libs/DynamicShop-3.16.1.jar</systemPath>
+            <scope>system</scope>
         </dependency>
     </dependencies>
 

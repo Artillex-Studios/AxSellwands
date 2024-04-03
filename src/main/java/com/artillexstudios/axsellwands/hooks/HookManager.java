@@ -17,10 +17,12 @@ import com.artillexstudios.axsellwands.hooks.protection.PlotSquaredHook;
 import com.artillexstudios.axsellwands.hooks.protection.ProtectionHook;
 import com.artillexstudios.axsellwands.hooks.protection.ResidenceHook;
 import com.artillexstudios.axsellwands.hooks.protection.SuperiorSkyBlock2Hook;
+import com.artillexstudios.axsellwands.hooks.protection.TownyHook;
 import com.artillexstudios.axsellwands.hooks.protection.WorldGuardHook;
 import com.artillexstudios.axsellwands.hooks.shop.AxGensHook;
 import com.artillexstudios.axsellwands.hooks.shop.BuiltinPrices;
 import com.artillexstudios.axsellwands.hooks.shop.CMIPricesHook;
+import com.artillexstudios.axsellwands.hooks.shop.DynamicShop3Hook;
 import com.artillexstudios.axsellwands.hooks.shop.EconomyShopGuiHook;
 import com.artillexstudios.axsellwands.hooks.shop.EssentialsHook;
 import com.artillexstudios.axsellwands.hooks.shop.PricesHook;
@@ -96,6 +98,11 @@ public class HookManager {
         if (HOOKS.getBoolean("hook-settings.HuskTowns.register", true) && Bukkit.getPluginManager().getPlugin("HuskTowns") != null) {
             PROTECTION_HOOKS.add(new HuskTownsHook());
             Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into HuskTowns!"));
+        }
+
+        if (HOOKS.getBoolean("hook-settings.Towny.register", true) && Bukkit.getPluginManager().getPlugin("Towny") != null) {
+            PROTECTION_HOOKS.add(new TownyHook());
+            Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into Towny!"));
         }
     }
 
@@ -193,6 +200,16 @@ public class HookManager {
                     Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into EconomoyShopGUI!"));
                 } else {
                     Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] EconomoyShopGUI is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
+                }
+                break;
+            }
+
+            case "DYNAMICSHOP": {
+                if (Bukkit.getPluginManager().getPlugin("DynamicShop") != null) {
+                    shopPrices = new DynamicShop3Hook();
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into DynamicShop!"));
+                } else {
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] DynamicShop is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
                 }
                 break;
             }

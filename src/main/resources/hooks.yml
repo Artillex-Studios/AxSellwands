@@ -4,7 +4,15 @@
 hooks:
   # values: Vault, PlayerPoints, CoinsEngine, RoyaleEconomy, custom
   economy-plugin: "Vault"
-  # values: builtin, AxGens, ShopGUIPlus, Essentials, EconomyShopGUI, CMI, custom
+  # values:
+  # - builtin
+  # - AxGens
+  # - ShopGUIPlus
+  # - Essentials
+  # - EconomyShopGUI
+  # - DynamicShop
+  # - CMI
+  # - custom
   price-plugin: "builtin"
 
 hook-settings:
@@ -25,6 +33,8 @@ hook-settings:
   Residence:
     register: true
   HuskTowns:
+    register: true
+  Towny:
     register: true
   # other
   PlaceholderAPI:
