@@ -56,5 +56,7 @@ public class ExcellentShopHook implements PricesHook {
                 }
             }
         }
+
+        return 0;
     }
 }
