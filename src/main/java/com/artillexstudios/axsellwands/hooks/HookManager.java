@@ -25,6 +25,7 @@ import com.artillexstudios.axsellwands.hooks.shop.CMIPricesHook;
 import com.artillexstudios.axsellwands.hooks.shop.DynamicShop3Hook;
 import com.artillexstudios.axsellwands.hooks.shop.EconomyShopGuiHook;
 import com.artillexstudios.axsellwands.hooks.shop.EssentialsHook;
+import com.artillexstudios.axsellwands.hooks.shop.ExcellentShopHook;
 import com.artillexstudios.axsellwands.hooks.shop.PricesHook;
 import com.artillexstudios.axsellwands.hooks.shop.ShopGUIPlusHook;
 import org.bukkit.Bukkit;
@@ -210,6 +211,16 @@ public class HookManager {
                     Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into DynamicShop!"));
                 } else {
                     Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] DynamicShop is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
+                }
+                break;
+            }
+
+            case "EXCELLENTSHOP": {
+                if (Bukkit.getPluginManager().getPlugin("ExcellentShop") != null) {
+                    shopPrices = new ExcellentShopHook();
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into ExcellentShop!"));
+                } else {
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] ExcellentShop is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
                 }
                 break;
             }
