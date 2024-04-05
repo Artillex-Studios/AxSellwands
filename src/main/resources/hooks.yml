@@ -11,6 +11,7 @@ hooks:
   # - Essentials
   # - EconomyShopGUI
   # - DynamicShop
+  # - ExcellentShop
   # - CMI
   # - custom
   price-plugin: "builtin"

@@ -14,7 +14,7 @@ public class DynamicShop3Hook implements PricesHook {
     public double getPrice(ItemStack it) {
         double most = -1.0D;
         for (String str : DynaShopAPI.getShops()) {
-            most = Math.max(DynaShopAPI.getBuyPrice(str, it), most);
+            most = Math.max(DynaShopAPI.getSellPrice(str, it), most);
         }
         if (most == -1.0D) return most;
         return most * it.getAmount();
