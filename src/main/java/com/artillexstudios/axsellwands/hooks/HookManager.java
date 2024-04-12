@@ -198,9 +198,9 @@ public class HookManager {
             case "ECONOMYSHOPGUI": {
                 if (Bukkit.getPluginManager().getPlugin("EconomyShopGUI") != null || Bukkit.getPluginManager().getPlugin("EconomyShopGUI-Premium") != null) {
                     shopPrices = new EconomyShopGuiHook();
-                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into EconomoyShopGUI!"));
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into EconomyShopGUI!"));
                 } else {
-                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] EconomoyShopGUI is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] EconomyShopGUI is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
                 }
                 break;
             }

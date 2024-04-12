@@ -18,7 +18,7 @@ nothing-sold: "&#FFAA55Nothing in the container is sellable!"
 
 cooldown: "&#FFAA55You must wait another &f%time% seconds &#FFAA55before using this sellwand again!"
 
-no-permission: "&#FFAA55You don't have a permission to use a sellwant on this chest!"
+no-permission: "&#FFAA55You don't have a permission to use a sellwant on this container!"
 
 disallowed-container: "&#FFAA55This sellwand can't be used on this type of container!"
 

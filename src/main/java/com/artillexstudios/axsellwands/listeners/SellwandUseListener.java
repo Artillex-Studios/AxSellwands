@@ -96,10 +96,6 @@ public class SellwandUseListener implements Listener {
                 it.setAmount(0);
             }
 
-            final HashMap<String, String> replacements = new HashMap<>();
-            replacements.put("%amount%", "" + newSoldAmount);
-            replacements.put("%price%", NumberUtils.formatNumber(newSoldPrice));
-
             if (newSoldAmount == 0) {
                 MESSAGEUTILS.sendLang(player, "nothing-sold");
                 return;
@@ -109,6 +105,10 @@ public class SellwandUseListener implements Listener {
             Bukkit.getPluginManager().callEvent(apiEvent);
             if (apiEvent.isCancelled()) return;
             newSoldPrice = apiEvent.getMoneyMade();
+
+            final HashMap<String, String> replacements = new HashMap<>();
+            replacements.put("%amount%", "" + newSoldAmount);
+            replacements.put("%price%", NumberUtils.formatNumber(newSoldPrice));
 
             HookManager.getCurrency().giveBalance(player, newSoldPrice);
 
