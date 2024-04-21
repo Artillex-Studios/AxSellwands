@@ -16,6 +16,6 @@ public class PlotSquaredHook implements ProtectionHook {
         final Plot plot = plotArea.getPlot(plotLoc);
         if (plot == null) return true;
 
-        return plot.getMembers().contains(player.getUniqueId()) || plot.getOwners().contains(player.getUniqueId());
+        return plot.isAdded(player.getUniqueId());
     }
 }
