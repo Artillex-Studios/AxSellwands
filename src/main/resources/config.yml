@@ -2,9 +2,13 @@ prefix: "<gradient:#FF5500:#FF7700><bold>AxSellwands</gradient> &7» "
 
 # modes:
 # 0 - disallow stacking
-# 1 - merge the 2 sell wands together (max usage and multiplier will not increase)
+# 1 - merge the 2 sell wands together (max usage and multiplier will not increase by default)
 # 2 - ignore (not recommended)
+# note: stacking does not work in creative mode
 stacking-mode: 1
+
+# if true: when merging two sell wands, their usage limit can go over the limit
+allow-going-over-limit: false
 
 number-formatting:
   # modes:
@@ -25,4 +29,4 @@ hologram:
   stay-time-ticks: 60
 
 # do not change this
-version: 1
+version: 2

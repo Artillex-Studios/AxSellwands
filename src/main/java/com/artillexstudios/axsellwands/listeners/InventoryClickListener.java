@@ -6,6 +6,7 @@ import com.artillexstudios.axsellwands.sellwands.Sellwand;
 import com.artillexstudios.axsellwands.sellwands.Sellwands;
 import com.artillexstudios.axsellwands.utils.NBTUtils;
 import com.artillexstudios.axsellwands.utils.NumberUtils;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
@@ -27,6 +28,7 @@ public class InventoryClickListener implements Listener {
     public void onClick(@NotNull InventoryClickEvent event) {
         if (CONFIG.getInt("stacking-mode", 1) != 1) return;
         final Player player = (Player) event.getWhoClicked();
+        if (player.getGameMode() == GameMode.CREATIVE) return;
         if (event.getClickedInventory() == null || !event.getClickedInventory().equals(player.getInventory())) return;
         if (event.getCursor() == null || event.getCursor().getType() == Material.AIR) return;
         if (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR) return;
@@ -68,7 +70,7 @@ public class InventoryClickListener implements Listener {
         final double soldPrice2 = NBTUtils.readDoubleFromNBT(event.getCursor(), "axsellwands-sold-price");
 
         int newMax = Math.max(maxUses1, maxUses2);
-        int newUses = Math.min(newMax, (uses1 + uses2));
+        int newUses = Math.min(CONFIG.getBoolean("allow-going-over-limit", false) ? Integer.MAX_VALUE : newMax, (uses1 + uses2));
         int newSoldAmount = soldAmount1 + soldAmount2;
         double newSoldPrice = soldPrice1 + soldPrice2;
 
