@@ -41,7 +41,7 @@ public class Commands {
         }
     }
 
-    @Subcommand("give")
+    @Subcommand("give") // todo: add optional overrides for uses, multiplier
     public void give(@NotNull CommandSender sender, Player player, @Sellwands @NotNull Sellwand sellwand, @Optional @Range(min = 1, max = 64) Integer amount) {
 
         float multiplier = sellwand.getMultiplier();
