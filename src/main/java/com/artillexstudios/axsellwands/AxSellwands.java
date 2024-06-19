@@ -8,6 +8,8 @@ import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.dumper.Du
 import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.general.GeneralSettings;
 import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.loader.LoaderSettings;
 import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.updater.UpdaterSettings;
+import com.artillexstudios.axapi.nms.NMSHandlers;
+import com.artillexstudios.axapi.utils.FastFieldAccessor;
 import com.artillexstudios.axapi.utils.FeatureFlags;
 import com.artillexstudios.axapi.utils.MessageUtils;
 import com.artillexstudios.axapi.utils.StringUtils;
@@ -18,16 +20,26 @@ import com.artillexstudios.axsellwands.listeners.InventoryClickListener;
 import com.artillexstudios.axsellwands.listeners.SellwandUseListener;
 import com.artillexstudios.axsellwands.sellwands.Sellwand;
 import com.artillexstudios.axsellwands.sellwands.Sellwands;
+import com.artillexstudios.axsellwands.utils.CommandMessages;
 import com.artillexstudios.axsellwands.utils.FileUtils;
 import com.artillexstudios.axsellwands.utils.NumberUtils;
 import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.OfflinePlayer;
+import org.bukkit.Warning;
+import org.bukkit.entity.HumanEntity;
+import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
+import revxrsal.commands.bukkit.exception.InvalidPlayerException;
+import revxrsal.commands.exception.CommandErrorException;
+import revxrsal.commands.exception.SendMessageException;
 
 import java.io.File;
 import java.util.ArrayList;
 import java.util.List;
+import java.util.Locale;
+import java.util.stream.Collectors;
 
 public final class AxSellwands extends AxPlugin {
     public static Config CONFIG;
@@ -65,7 +77,26 @@ public final class AxSellwands extends AxPlugin {
         HookManager.setupHooks();
         NumberUtils.reload();
 
-        final BukkitCommandHandler handler = BukkitCommandHandler.create(this);
+        Warning.WarningState prevState = Bukkit.getWarningState();
+        FastFieldAccessor accessor = FastFieldAccessor.forClassField(Bukkit.getServer().getClass().getPackage().getName() + ".CraftServer", "warningState");
+        accessor.set(Bukkit.getServer(), Warning.WarningState.OFF);
+        final BukkitCommandHandler handler = BukkitCommandHandler.create(instance);
+        accessor.set(Bukkit.getServer(), prevState);
+
+        handler.registerValueResolver(0, OfflinePlayer.class, context -> {
+            String value = context.pop();
+            if (value.equalsIgnoreCase("self") || value.equalsIgnoreCase("me")) return ((BukkitCommandActor) context.actor()).requirePlayer();
+            OfflinePlayer player = NMSHandlers.getNmsHandler().getCachedOfflinePlayer(value);
+            if (player == null && !(player = Bukkit.getOfflinePlayer(value)).hasPlayedBefore()) throw new InvalidPlayerException(context.parameter(), value);
+            return player;
+        });
+
+        handler.getAutoCompleter().registerParameterSuggestions(OfflinePlayer.class, (args, sender, command) -> {
+            return Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toSet());
+        });
+
+        handler.getTranslator().add(new CommandMessages());
+        handler.setLocale(new Locale("en", "US"));
 
         handler.getAutoCompleter().registerSuggestionFactory(parameter -> {
             if (parameter.hasAnnotation(com.artillexstudios.axsellwands.commands.annotations.Sellwands.class)) {
@@ -81,7 +112,9 @@ public final class AxSellwands extends AxPlugin {
 
         handler.registerValueResolver(Sellwand.class, resolver -> {
             final String str = resolver.popForParameter();
-            return Sellwands.getSellwands().get(str);
+            if (Sellwands.getSellwands().containsKey(str))
+                return Sellwands.getSellwands().get(str);
+            throw new CommandErrorException("invalid-command", str);
         });
 
         handler.register(new Commands());

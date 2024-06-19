@@ -8,6 +8,7 @@ import com.artillexstudios.axsellwands.api.events.AxSellwandsSellEvent;
 import com.artillexstudios.axsellwands.hooks.HookManager;
 import com.artillexstudios.axsellwands.sellwands.Sellwand;
 import com.artillexstudios.axsellwands.sellwands.Sellwands;
+import com.artillexstudios.axsellwands.utils.HistoryUtils;
 import com.artillexstudios.axsellwands.utils.HologramUtils;
 import com.artillexstudios.axsellwands.utils.NBTUtils;
 import com.artillexstudios.axsellwands.utils.NumberUtils;
@@ -28,6 +29,7 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.UUID;
 
 import static com.artillexstudios.axsellwands.AxSellwands.CONFIG;
@@ -84,6 +86,7 @@ public class SellwandUseListener implements Listener {
         double newSoldPrice = 0;
 
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
+            final Map<Material, Integer> items = new HashMap<>();
             for (ItemStack it : contents) {
                 if (it == null) continue;
                 double price = HookManager.getShopPrices().getPrice(player, it);
@@ -92,6 +95,11 @@ public class SellwandUseListener implements Listener {
 
                 newSoldPrice += price;
                 newSoldAmount += it.getAmount();
+
+                if (items.containsKey(it.getType()))
+                    items.put(it.getType(), items.get(it.getType()) + it.getAmount());
+                else
+                    items.put(it.getType(), it.getAmount());
 
                 it.setAmount(0);
             }
@@ -105,6 +113,16 @@ public class SellwandUseListener implements Listener {
             Bukkit.getPluginManager().callEvent(apiEvent);
             if (apiEvent.isCancelled()) return;
             newSoldPrice = apiEvent.getMoneyMade();
+
+            StringBuilder str = new StringBuilder("[");
+            boolean first = true;
+            for (Map.Entry<Material, Integer> e : items.entrySet()) {
+                if (!first) str.append(", ");
+                first = false;
+                str.append(e.getValue()).append("x ").append(e.getKey().name());
+            }
+            str.append("]");
+            HistoryUtils.writeToHistory(String.format("%s sold %dx items %s and earned %s (multiplier: %s, uses: %d)", player.getName(), newSoldAmount, str, newSoldPrice, multiplier, uses - 1));
 
             final HashMap<String, String> replacements = new HashMap<>();
             replacements.put("%amount%", "" + newSoldAmount);
