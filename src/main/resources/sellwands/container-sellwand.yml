@@ -31,7 +31,7 @@ uses: 100
 
 # how often should the player be able to sell
 # set to 0 to disable
-cooldown-miliseconds: 5000
+cooldown-milliseconds: 5000
 
 # values: CHEST, TRAPPED_CHEST, ENDER_CHEST, all SHULKER_BOX-es, FURNACE, BLAST_FURNACE, BARREL, HOPPER, SMOKER, DISPENSER, DROPPER
 # containers where you can use sell wands, don't use both allowed-containers and disallowed-containers at once
