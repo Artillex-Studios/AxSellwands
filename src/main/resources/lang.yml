@@ -20,7 +20,7 @@ nothing-sold: "&#FFAA55Nothing in the container is sellable!"
 
 cooldown: "&#FFAA55You must wait another &f%time% seconds &#FFAA55before using this sellwand again!"
 
-no-permission: "&#FFAA55You don't have a permission to use a sellwant on this container!"
+no-permission: "&#FFAA55You don't have a permission to use a sellwand on this container!"
 
 disallowed-container: "&#FFAA55This sellwand can't be used on this type of container!"
 
@@ -73,5 +73,7 @@ commands:
   invalid-player: "&#FF0000The player &#BB0000%player% &#FF0000can not be found!"
   invalid-selector: "&#FF0000You can not use this selector in this command!"
 
+update-notifier: "&#FFAA00There is a new version of the plugin available! &#DDDDDD(&#FFFFFFcurrent: &#FF0000%current% &#DDDDDD| &#FFFFFFlatest: &#00FF00%latest%&#DDDDDD)"
+
 # do not change this
-version: 2
+version: 3
