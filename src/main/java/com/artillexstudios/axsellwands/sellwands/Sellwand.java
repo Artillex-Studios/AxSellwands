@@ -27,7 +27,7 @@ public class Sellwand {
         this.name = file.getString("name", "Sellwand");
         this.multiplier = file.getFloat("multiplier", 1f);
         this.uses = file.getInt("uses", -1);
-        this.cooldown = file.getLong("cooldown-miliseconds", 0);
+        this.cooldown = file.getLong("cooldown-milliseconds", 0);
         this.itemSection = file.getSection("item");
 
         for (String str : file.getStringList("disallowed-containers")) {

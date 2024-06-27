@@ -28,4 +28,4 @@ uses: 100
 
 # how often should the player be able to sell
 # set to 0 to disable
-cooldown-miliseconds: 0
+cooldown-milliseconds: 0
