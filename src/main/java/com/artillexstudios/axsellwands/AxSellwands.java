@@ -78,19 +78,7 @@ public final class AxSellwands extends AxPlugin {
         HookManager.setupHooks();
         NumberUtils.reload();
 
-        Warning.WarningState prevState = Bukkit.getWarningState();
-        FastFieldAccessor accessor = FastFieldAccessor.forClassField(Bukkit.getServer().getClass().getPackage().getName() + ".CraftServer", "warningState");
-        accessor.set(Bukkit.getServer(), Warning.WarningState.OFF);
         final BukkitCommandHandler handler = BukkitCommandHandler.create(instance);
-        accessor.set(Bukkit.getServer(), prevState);
-
-        handler.registerValueResolver(0, OfflinePlayer.class, context -> {
-            String value = context.pop();
-            if (value.equalsIgnoreCase("self") || value.equalsIgnoreCase("me")) return ((BukkitCommandActor) context.actor()).requirePlayer();
-            OfflinePlayer player = NMSHandlers.getNmsHandler().getCachedOfflinePlayer(value);
-            if (player == null && !(player = Bukkit.getOfflinePlayer(value)).hasPlayedBefore()) throw new InvalidPlayerException(context.parameter(), value);
-            return player;
-        });
 
         handler.getAutoCompleter().registerParameterSuggestions(OfflinePlayer.class, (args, sender, command) -> {
             return Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toSet());
