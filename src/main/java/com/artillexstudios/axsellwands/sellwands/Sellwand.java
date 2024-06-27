@@ -24,6 +24,13 @@ public class Sellwand {
         this.id = id;
         this.file = file;
 
+        Long configMillis = file.getBackingDocument().getLong("cooldown-miliseconds");
+        if (configMillis != null) {
+            file.getBackingDocument().remove("cooldown-miliseconds");
+            file.set("cooldown-milliseconds", configMillis);
+            file.save();
+        }
+
         this.name = file.getString("name", "Sellwand");
         this.multiplier = file.getFloat("multiplier", 1f);
         this.uses = file.getInt("uses", -1);
