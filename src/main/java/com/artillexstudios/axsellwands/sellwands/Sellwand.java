@@ -24,8 +24,8 @@ public class Sellwand {
         this.id = id;
         this.file = file;
 
-        Long configMillis = file.getBackingDocument().getLong("cooldown-miliseconds");
-        if (configMillis != null) {
+        long configMillis = file.getLong("cooldown-miliseconds", -1);
+        if (configMillis != -1) {
             file.getBackingDocument().remove("cooldown-miliseconds");
             file.set("cooldown-milliseconds", configMillis);
             file.save();

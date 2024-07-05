@@ -23,25 +23,31 @@ hook-settings:
   CoinsEngine:
     currency-name: "coins"
   # protection
+  BentoBox:
+    register: true
   GriefPrevention:
+    register: true
+  HuskTowns:
     register: true
   IridiumSkyBlock:
     register: true
   Kingdoms:
     register: true
-  SuperiorSkyblock2:
-    register: true
   Lands:
+    register: true
+  PlotSquared:
     register: true
   Residence:
     register: true
-  HuskTowns:
+  SuperiorSkyblock2:
     register: true
   Towny:
+    register: true
+  WorldGuard:
     register: true
   # other
   PlaceholderAPI:
     register: true
 
 # do not change this
-version: 1
+version: 2

@@ -3,7 +3,6 @@ package com.artillexstudios.axsellwands.commands;
 import com.artillexstudios.axapi.utils.ContainerUtils;
 import com.artillexstudios.axapi.utils.ItemBuilder;
 import com.artillexstudios.axapi.utils.StringUtils;
-import com.artillexstudios.axsellwands.commands.annotations.Sellwands;
 import com.artillexstudios.axsellwands.hooks.HookManager;
 import com.artillexstudios.axsellwands.sellwands.Sellwand;
 import com.artillexstudios.axsellwands.utils.NBTUtils;
@@ -42,7 +41,7 @@ public class Commands {
     }
 
     @Subcommand("give") // todo: add optional overrides for uses, multiplier
-    public void give(@NotNull CommandSender sender, Player player, @Sellwands @NotNull Sellwand sellwand, @Optional @Range(min = 1, max = 64) Integer amount) {
+    public void give(@NotNull CommandSender sender, Player player, @NotNull Sellwand sellwand, @Optional @Range(min = 1, max = 64) Integer amount) {
 
         float multiplier = sellwand.getMultiplier();
         int uses = sellwand.getUses();

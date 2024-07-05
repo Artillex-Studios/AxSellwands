@@ -23,6 +23,6 @@ public class WorldGuardHook implements ProtectionHook {
         final boolean canBypass = com.sk89q.worldguard.WorldGuard.getInstance().getPlatform().getSessionManager().hasBypass(localPlayer, world);
         if (canBypass) return true;
 
-        return query.testState(location1, localPlayer, Flags.BUILD);
+        return query.testState(location1, localPlayer, Flags.CHEST_ACCESS); // AxSellwands
     }
 }

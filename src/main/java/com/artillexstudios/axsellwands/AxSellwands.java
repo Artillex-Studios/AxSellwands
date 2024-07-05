@@ -8,8 +8,6 @@ import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.dumper.Du
 import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.general.GeneralSettings;
 import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.loader.LoaderSettings;
 import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.updater.UpdaterSettings;
-import com.artillexstudios.axapi.nms.NMSHandlers;
-import com.artillexstudios.axapi.reflection.FastFieldAccessor;
 import com.artillexstudios.axapi.utils.FeatureFlags;
 import com.artillexstudios.axapi.utils.MessageUtils;
 import com.artillexstudios.axapi.utils.StringUtils;
@@ -28,13 +26,9 @@ import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
-import org.bukkit.Warning;
 import org.bukkit.entity.HumanEntity;
-import revxrsal.commands.bukkit.BukkitCommandActor;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
-import revxrsal.commands.bukkit.exception.InvalidPlayerException;
 import revxrsal.commands.exception.CommandErrorException;
-import revxrsal.commands.exception.SendMessageException;
 
 import java.io.File;
 import java.util.ArrayList;
@@ -87,16 +81,14 @@ public final class AxSellwands extends AxPlugin {
         handler.getTranslator().add(new CommandMessages());
         handler.setLocale(new Locale("en", "US"));
 
-        handler.getAutoCompleter().registerSuggestionFactory(parameter -> {
-            if (parameter.hasAnnotation(com.artillexstudios.axsellwands.commands.annotations.Sellwands.class)) {
-                return (args, sender, command) -> {
-                    final List<String> suggestions = new ArrayList<>();
-                    Sellwands.getSellwands().forEach((id, sellwand) -> suggestions.add(id));
+        handler.getAutoCompleter().registerParameterSuggestions(Sellwand.class, (args, sender, command) -> {
+            final List<String> suggestions = new ArrayList<>();
+            Sellwands.getSellwands().forEach((id, sellwand) -> suggestions.add(id));
 
-                    return suggestions;
-                };
-            }
-            return null;
+            if (suggestions.isEmpty())
+                sender.error("There are no sellwands configured! If this is your first install, contact support or copy files from out github resources!");
+
+            return suggestions;
         });
 
         handler.registerValueResolver(Sellwand.class, resolver -> {
