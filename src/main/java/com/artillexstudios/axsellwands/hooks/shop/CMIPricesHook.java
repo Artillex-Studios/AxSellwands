@@ -17,7 +17,7 @@ public class CMIPricesHook implements PricesHook {
         final WorthItem worth = manager.getWorthManager().getWorth(it);
         if (worth == null) return -1.0D;
 
-        return worth.getSellPrice() == 0.0D ? -1.0 : worth.getSellPrice();
+        return worth.getSellPrice() == 0.0D ? -1.0D : worth.getSellPrice();
     }
 
     @Override
@@ -25,6 +25,6 @@ public class CMIPricesHook implements PricesHook {
         final WorthItem worth = manager.getWorthManager().getWorth(it);
         if (worth == null) return -1.0D;
 
-        return worth.getSellPrice() == 0.0D ? -1.0 : worth.getSellPrice();
+        return worth.getSellPrice() == 0.0D ? -1.0D : worth.getSellPrice();
     }
 }

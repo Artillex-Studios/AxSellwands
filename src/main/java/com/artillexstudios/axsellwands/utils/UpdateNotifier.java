@@ -62,7 +62,7 @@ public class UpdateNotifier implements Listener {
         HashMap<String, String> map = new HashMap<>();
         map.put("%current%", current);
         map.put("%latest%", latest);
-        return StringUtils.formatToString(CONFIG.getString("prefix") + LANG .getString("update-notifier"), map);
+        return StringUtils.formatToString(CONFIG.getString("prefix") + LANG.getString("update-notifier"), map);
     }
 
     @Nullable

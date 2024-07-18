@@ -47,6 +47,7 @@ public class SellwandUseListener implements Listener {
         if (type == null) return;
         final Sellwand sellwand = Sellwands.getSellwands().get(type);
         event.setCancelled(true);
+        if (sellwand == null) return;
         final Player player = event.getPlayer();
 
         final ItemStack[] contents;
@@ -90,7 +91,7 @@ public class SellwandUseListener implements Listener {
             for (ItemStack it : contents) {
                 if (it == null) continue;
                 double price = HookManager.getShopPrices().getPrice(player, it);
-                if (price == -1.0D) continue;
+                if (price <= 0) continue;
                 price *= multiplier;
 
                 newSoldPrice += price;
@@ -104,7 +105,7 @@ public class SellwandUseListener implements Listener {
                 it.setAmount(0);
             }
 
-            if (newSoldAmount == 0) {
+            if (newSoldAmount == 0 || newSoldPrice == 0) {
                 MESSAGEUTILS.sendLang(player, "nothing-sold");
                 return;
             }

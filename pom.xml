@@ -6,7 +6,7 @@
 
     <groupId>com.artillexstudios</groupId>
     <artifactId>AxSellwands</artifactId>
-    <version>1.6.1</version>
+    <version>1.6.2</version>
     <packaging>jar</packaging>
 
     <name>AxSellwands</name>
@@ -156,7 +156,7 @@
         <dependency>
             <groupId>com.artillexstudios.axapi</groupId>
             <artifactId>axapi</artifactId>
-            <version>1.4.280</version>
+            <version>1.4.292</version>
             <scope>compile</scope>
             <classifier>all</classifier>
         </dependency>
@@ -374,6 +374,13 @@
             <artifactId>ExcellentShop</artifactId>
             <version>4.8.6</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>me.crafter.mc.lockettepro</groupId>
+            <artifactId>LockettePro</artifactId>
+            <version>LATEST</version>
+            <systemPath>${project.basedir}/libs/LockettePro-2.11.1.jar</systemPath>
+            <scope>system</scope>
         </dependency>
     </dependencies>
 
