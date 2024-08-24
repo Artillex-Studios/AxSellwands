@@ -9,6 +9,7 @@ import com.artillexstudios.axsellwands.hooks.currency.VaultHook;
 import com.artillexstudios.axsellwands.hooks.other.Placeholders;
 import com.artillexstudios.axsellwands.hooks.protection.BentoBoxHook;
 import com.artillexstudios.axsellwands.hooks.protection.GriefPreventionHook;
+import com.artillexstudios.axsellwands.hooks.protection.HuskClaimsHook;
 import com.artillexstudios.axsellwands.hooks.protection.HuskTownsHook;
 import com.artillexstudios.axsellwands.hooks.protection.IridiumSkyBlockHook;
 import com.artillexstudios.axsellwands.hooks.protection.KingdomsXHook;
@@ -99,6 +100,11 @@ public class HookManager {
         if (HOOKS.getBoolean("hook-settings.HuskTowns.register", true) && Bukkit.getPluginManager().getPlugin("HuskTowns") != null) {
             PROTECTION_HOOKS.add(new HuskTownsHook());
             Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into HuskTowns!"));
+        }
+
+        if (HOOKS.getBoolean("hook-settings.HuskClaims.register", true) && Bukkit.getPluginManager().getPlugin("HuskClaims") != null) {
+            PROTECTION_HOOKS.add(new HuskClaimsHook());
+            Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into HuskClaims!"));
         }
 
         if (HOOKS.getBoolean("hook-settings.Towny.register", true) && Bukkit.getPluginManager().getPlugin("Towny") != null) {

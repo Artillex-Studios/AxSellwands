@@ -6,7 +6,7 @@
 
     <groupId>com.artillexstudios</groupId>
     <artifactId>AxSellwands</artifactId>
-    <version>1.6.3</version>
+    <version>1.6.4</version>
     <packaging>jar</packaging>
 
     <name>AxSellwands</name>
@@ -156,7 +156,7 @@
         <dependency>
             <groupId>com.artillexstudios.axapi</groupId>
             <artifactId>axapi</artifactId>
-            <version>1.4.329</version>
+            <version>1.4.332</version>
             <scope>compile</scope>
             <classifier>all</classifier>
         </dependency>
@@ -348,6 +348,12 @@
             <groupId>net.william278.husktowns</groupId>
             <artifactId>husktowns-bukkit</artifactId>
             <version>3.0.2</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>net.william278.huskclaims</groupId>
+            <artifactId>huskclaims-bukkit</artifactId>
+            <version>1.3.5</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
