@@ -17,6 +17,7 @@ import com.artillexstudios.axsellwands.hooks.protection.LandsHook;
 import com.artillexstudios.axsellwands.hooks.protection.PlotSquaredHook;
 import com.artillexstudios.axsellwands.hooks.protection.ProtectionHook;
 import com.artillexstudios.axsellwands.hooks.protection.ResidenceHook;
+import com.artillexstudios.axsellwands.hooks.protection.SaberFactionsHook;
 import com.artillexstudios.axsellwands.hooks.protection.SuperiorSkyBlock2Hook;
 import com.artillexstudios.axsellwands.hooks.protection.TownyHook;
 import com.artillexstudios.axsellwands.hooks.protection.WorldGuardHook;
@@ -110,6 +111,11 @@ public class HookManager {
         if (HOOKS.getBoolean("hook-settings.Towny.register", true) && Bukkit.getPluginManager().getPlugin("Towny") != null) {
             PROTECTION_HOOKS.add(new TownyHook());
             Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into Towny!"));
+        }
+
+        if (HOOKS.getBoolean("hook-settings.SaberFactions.register", true) && Bukkit.getPluginManager().getPlugin("Factions") != null) {
+            PROTECTION_HOOKS.add(new SaberFactionsHook());
+            Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into SaberFactions!"));
         }
     }
 

@@ -39,6 +39,8 @@ hook-settings:
     register: true
   Residence:
     register: true
+  SaberFactions:
+    register: true
   SuperiorSkyblock2:
     register: true
   Towny:
