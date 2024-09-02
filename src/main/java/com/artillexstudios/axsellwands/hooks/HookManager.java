@@ -1,5 +1,6 @@
 package com.artillexstudios.axsellwands.hooks;
 
+import com.artillexstudios.axapi.reflection.ClassUtils;
 import com.artillexstudios.axapi.utils.StringUtils;
 import com.artillexstudios.axsellwands.hooks.currency.CoinsEngineHook;
 import com.artillexstudios.axsellwands.hooks.currency.CurrencyHook;
@@ -113,7 +114,7 @@ public class HookManager {
             Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into Towny!"));
         }
 
-        if (HOOKS.getBoolean("hook-settings.SaberFactions.register", true) && Bukkit.getPluginManager().getPlugin("Factions") != null) {
+        if (HOOKS.getBoolean("hook-settings.SaberFactions.register", true) && ClassUtils.INSTANCE.classExists("com.massivecraft.factions.listeners.SaberGUIListener")) {
             PROTECTION_HOOKS.add(new SaberFactionsHook());
             Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into SaberFactions!"));
         }
