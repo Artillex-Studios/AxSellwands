@@ -182,6 +182,8 @@ public class SellwandUseListener implements Listener {
             NBTUtils.writeToNBT(event.getItem(), "axsellwands-type", type);
             NBTUtils.writeToNBT(event.getItem(), "axsellwands-multiplier", multiplier);
             NBTUtils.writeToNBT(event.getItem(), "axsellwands-max-uses", maxUses);
+
+            if (block.getState() instanceof Container container) container.update();
         } else {
             for (ItemStack it : contents) {
                 if (it == null) continue;

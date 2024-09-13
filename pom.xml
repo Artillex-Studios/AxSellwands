@@ -6,7 +6,7 @@
 
     <groupId>com.artillexstudios</groupId>
     <artifactId>AxSellwands</artifactId>
-    <version>1.6.6</version>
+    <version>1.6.7</version>
     <packaging>jar</packaging>
 
     <name>AxSellwands</name>
@@ -225,7 +225,7 @@
         <dependency>
             <groupId>com.github.Gypopo</groupId>
             <artifactId>EconomyShopGUI-API</artifactId>
-            <version>1.6.0</version>
+            <version>1.7.1</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
