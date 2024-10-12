@@ -6,7 +6,7 @@
 
     <groupId>com.artillexstudios</groupId>
     <artifactId>AxSellwands</artifactId>
-    <version>1.6.7</version>
+    <version>1.6.8</version>
     <packaging>jar</packaging>
 
     <name>AxSellwands</name>
@@ -56,7 +56,7 @@
                                     <shadedPattern>com.artillexstudios.axsellwands.libs.gui</shadedPattern>
                                 </relocation>
                                 <relocation>
-                                    <pattern>net.kyori.adventure</pattern>
+                                    <pattern>net.kyori</pattern>
                                     <shadedPattern>com.artillexstudios.axsellwands.libs.kyori</shadedPattern>
                                 </relocation>
                                 <relocation>
@@ -156,7 +156,7 @@
         <dependency>
             <groupId>com.artillexstudios.axapi</groupId>
             <artifactId>axapi</artifactId>
-            <version>1.4.332</version>
+            <version>1.4.380</version>
             <scope>compile</scope>
             <classifier>all</classifier>
         </dependency>
@@ -343,6 +343,7 @@
             <groupId>com.github.DeadSilenceIV</groupId>
             <artifactId>AdvancedChestsAPI</artifactId>
             <version>3.2-BETA</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>net.william278.husktowns</groupId>

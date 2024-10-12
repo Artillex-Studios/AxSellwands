@@ -56,7 +56,8 @@ inspect:
 
 stack:
   success: "&#FFAA55You have successfully merged two sellwands!"
-  cant-stack: "&#FFAA55These sellwands cannont be stacked together!"
+  cant-stack: "&#FFAA55These sellwands can't be stacked together!"
+  unstack-first: "&#FFAA55You can only merge 2 sellwands together! Please first separate them first."
   confirm: "&#FFAA55You are about to merge two sellwands, note that their max usage will not stack! Click again to confirm!"
 
 sell-hologram:

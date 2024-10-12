@@ -36,12 +36,6 @@ public class HologramUtils {
         }));
 
         hologram.addLines(StringUtils.formatListToString(LANG.getStringList("sell-hologram")), HologramLine.Type.TEXT);
-
-        Scheduler.get().runLaterAt(location, new Consumer<ScheduledTask>() {
-            @Override
-            public void accept(ScheduledTask scheduledTask) {
-                hologram.remove();
-            }
-        }, CONFIG.getInt("hologram.stay-time-ticks", 30));
+        Scheduler.get().runLaterAt(location, scheduledTask -> hologram.remove(), CONFIG.getInt("hologram.stay-time-ticks", 30));
     }
 }

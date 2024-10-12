@@ -105,7 +105,7 @@ public class SellwandUseListener implements Listener {
                 it.setAmount(0);
             }
 
-            if (newSoldAmount == 0 || newSoldPrice == 0) {
+            if (newSoldAmount <= 0 || newSoldPrice <= 0) {
                 MESSAGEUTILS.sendLang(player, "nothing-sold");
                 return;
             }
@@ -195,6 +195,11 @@ public class SellwandUseListener implements Listener {
                 newSoldAmount += it.getAmount();
             }
 
+            if (newSoldAmount <= 0 || newSoldPrice <= 0) {
+                MESSAGEUTILS.sendLang(player, "nothing-sold");
+                return;
+            }
+
             final HashMap<String, String> replacements = new HashMap<>();
             replacements.put("%amount%", "" + newSoldAmount);
             replacements.put("%price%", NumberUtils.formatNumber(newSoldPrice));
@@ -208,7 +213,6 @@ public class SellwandUseListener implements Listener {
             if (LANG.getSection("inspect.title") != null && !LANG.getString("inspect.title.title").isBlank())
                 Title.create(StringUtils.format(LANG.getString("inspect.title.title"), replacements),
                         StringUtils.format(LANG.getString("inspect.title.subtitle"), replacements), 10, 40, 10).send(player);
-
 
             if (!LANG.getString("sounds.inspect").isEmpty()) {
                 player.playSound(player.getLocation(), Sound.valueOf(LANG.getString("sounds.inspect")), 1f, 1f);
