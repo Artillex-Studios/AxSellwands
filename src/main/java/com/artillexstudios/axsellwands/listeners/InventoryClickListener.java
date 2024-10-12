@@ -33,7 +33,6 @@ public class InventoryClickListener implements Listener {
         if (event.getCursor() == null || event.getCursor().getType() == Material.AIR) return;
         if (event.getCurrentItem() == null || event.getCurrentItem().getType() == Material.AIR) return;
 
-
         final String type1 = NBTUtils.readStringFromNBT(event.getCurrentItem(), "axsellwands-type");
         final String type2 = NBTUtils.readStringFromNBT(event.getCursor(), "axsellwands-type");
         if (type1 == null || type2 == null) return;
