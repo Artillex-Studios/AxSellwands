@@ -23,7 +23,6 @@ number-formatting:
   # format: language_COUNTRY
   short: "en_US"
 
-# requires minecraft 1.18+
 hologram:
   enabled: true
   # how long should the hologram stay
