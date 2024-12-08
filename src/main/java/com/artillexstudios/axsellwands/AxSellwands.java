@@ -8,9 +8,9 @@ import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.dumper.Du
 import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.general.GeneralSettings;
 import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.loader.LoaderSettings;
 import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.updater.UpdaterSettings;
-import com.artillexstudios.axapi.utils.FeatureFlags;
 import com.artillexstudios.axapi.utils.MessageUtils;
 import com.artillexstudios.axapi.utils.StringUtils;
+import com.artillexstudios.axapi.utils.featureflags.FeatureFlags;
 import com.artillexstudios.axsellwands.commands.Commands;
 import com.artillexstudios.axsellwands.hooks.HookManager;
 import com.artillexstudios.axsellwands.listeners.CraftListener;
@@ -114,9 +114,9 @@ public final class AxSellwands extends AxPlugin {
         if (CONFIG.getBoolean("update-notifier.enabled", true)) new UpdateNotifier(this, 5725);
     }
 
-    public void updateFlags() {
-        FeatureFlags.USE_LEGACY_HEX_FORMATTER.set(true);
-        FeatureFlags.PACKET_ENTITY_TRACKER_ENABLED.set(true);
-        FeatureFlags.HOLOGRAM_UPDATE_TICKS.set(20L);
+    public void updateFlags(FeatureFlags flags) {
+        flags.USE_LEGACY_HEX_FORMATTER.set(true);
+        flags.PACKET_ENTITY_TRACKER_ENABLED.set(true);
+        flags.HOLOGRAM_UPDATE_TICKS.set(20L);
     }
 }
