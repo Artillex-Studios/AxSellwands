@@ -3,12 +3,9 @@ package com.artillexstudios.axsellwands.hooks.shop;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 import su.nightexpress.nexshop.ShopAPI;
-import su.nightexpress.nexshop.api.shop.VirtualShop;
-import su.nightexpress.nexshop.api.shop.packer.ItemPacker;
-import su.nightexpress.nexshop.api.shop.packer.ProductPacker;
 import su.nightexpress.nexshop.api.shop.product.VirtualProduct;
+import su.nightexpress.nexshop.api.shop.type.TradeType;
 
-@SuppressWarnings("UnreachableCode")
 public class ExcellentShopHook implements PricesHook {
 
     @Override
@@ -18,45 +15,15 @@ public class ExcellentShopHook implements PricesHook {
 
     @Override
     public double getPrice(ItemStack it) {
-        for (VirtualShop shop : ShopAPI.getVirtualShop().getShops()) {
-            for (VirtualProduct product : shop.getProducts()) {
-                ProductPacker packer = product.getPacker();
-
-                if (!product.isSellable()) {
-                    continue;
-                }
-
-                if (packer instanceof ItemPacker) {
-                    ItemPacker itemPacker = (ItemPacker) packer;
-                    if (itemPacker.isItemMatches(it)) {
-                        return product.getPricer().getSellPrice() / itemPacker.getUnitAmount() * it.getAmount();
-                    }
-                }
-            }
-        }
-
-        return 0;
+        VirtualProduct product = ShopAPI.getVirtualShop().getBestProductFor(it, TradeType.SELL);
+        if (product == null || !product.isSellable()) return 0;
+        return product.getPrice(TradeType.SELL) / product.getUnitAmount() * it.getAmount();
     }
 
     @Override
     public double getPrice(Player player, ItemStack it) {
-        for (VirtualShop shop : ShopAPI.getVirtualShop().getShops()) {
-            for (VirtualProduct product : shop.getProducts()) {
-                ProductPacker packer = product.getPacker();
-
-                if (!product.isSellable()) {
-                    continue;
-                }
-
-                if (packer instanceof ItemPacker) {
-                    ItemPacker itemPacker = (ItemPacker) packer;
-                    if (itemPacker.isItemMatches(it)) {
-                        return product.getPriceSell(player) / itemPacker.getUnitAmount() * it.getAmount();
-                    }
-                }
-            }
-        }
-
-        return 0;
+        VirtualProduct product = ShopAPI.getVirtualShop().getBestProductFor(it, TradeType.SELL);
+        if (product == null || !product.isSellable()) return 0;
+        return product.getPrice(TradeType.SELL, player) / product.getUnitAmount() * it.getAmount();
     }
 }

@@ -2,7 +2,6 @@ package com.artillexstudios.axsellwands.utils;
 
 import com.artillexstudios.axapi.hologram.Hologram;
 import com.artillexstudios.axapi.hologram.HologramLine;
-import com.artillexstudios.axapi.scheduler.ScheduledTask;
 import com.artillexstudios.axapi.scheduler.Scheduler;
 import com.artillexstudios.axapi.utils.StringUtils;
 import com.artillexstudios.axapi.utils.placeholder.StaticPlaceholder;
@@ -13,7 +12,6 @@ import org.jetbrains.annotations.NotNull;
 
 import java.util.HashMap;
 import java.util.concurrent.atomic.AtomicReference;
-import java.util.function.Consumer;
 
 import static com.artillexstudios.axsellwands.AxSellwands.CONFIG;
 import static com.artillexstudios.axsellwands.AxSellwands.LANG;

@@ -6,7 +6,7 @@
 
     <groupId>com.artillexstudios</groupId>
     <artifactId>AxSellwands</artifactId>
-    <version>1.8.0</version>
+    <version>1.8.1</version>
     <packaging>jar</packaging>
 
     <name>AxSellwands</name>
@@ -138,6 +138,10 @@
             <id>bg-software</id>
             <url>https://repo.bg-software.com/repository/dependencies/</url>
         </repository>
+        <repository>
+            <id>nightexpress-releases</id>
+            <url>https://repo.nightexpressdev.com/releases</url>
+        </repository>
     </repositories>
 
     <dependencyManagement>
@@ -156,7 +160,7 @@
         <dependency>
             <groupId>com.artillexstudios.axapi</groupId>
             <artifactId>axapi</artifactId>
-            <version>1.4.435</version>
+            <version>1.4.513</version>
             <scope>compile</scope>
             <classifier>all</classifier>
         </dependency>
@@ -181,7 +185,7 @@
         <dependency>
             <groupId>dev.triumphteam</groupId>
             <artifactId>triumph-gui</artifactId>
-            <version>3.1.10</version>
+            <version>3.1.11</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -371,15 +375,15 @@
             <scope>system</scope>
         </dependency>
         <dependency>
-            <groupId>su.nexmedia.engine</groupId>
-            <artifactId>NexEngine</artifactId>
-            <version>2.2.10</version>
+            <groupId>su.nightexpress.nightcore</groupId>
+            <artifactId>nightcore</artifactId>
+            <version>2.7.3</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>su.nightexpress.nexshop</groupId>
             <artifactId>ExcellentShop</artifactId>
-            <version>4.8.6</version>
+            <version>4.13.4</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
