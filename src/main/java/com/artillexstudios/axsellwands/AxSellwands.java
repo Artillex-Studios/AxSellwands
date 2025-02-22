@@ -8,6 +8,7 @@ import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.dumper.Du
 import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.general.GeneralSettings;
 import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.loader.LoaderSettings;
 import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.settings.updater.UpdaterSettings;
+import com.artillexstudios.axapi.metrics.AxMetrics;
 import com.artillexstudios.axapi.utils.MessageUtils;
 import com.artillexstudios.axapi.utils.StringUtils;
 import com.artillexstudios.axapi.utils.featureflags.FeatureFlags;
@@ -44,6 +45,7 @@ public final class AxSellwands extends AxPlugin {
     private static AxPlugin instance;
     private static ThreadedQueue<Runnable> threadedQueue;
     public static BukkitAudiences BUKKITAUDIENCES;
+    private static AxMetrics metrics;
 
     public static ThreadedQueue<Runnable> getThreadedQueue() {
         return threadedQueue;
@@ -56,8 +58,7 @@ public final class AxSellwands extends AxPlugin {
     public void enable() {
         instance = this;
 
-        int pluginId = 21332;
-        new Metrics(this, pluginId);
+        new Metrics(this, 21332);
 
         CONFIG = new Config(new File(getDataFolder(), "config.yml"), getResource("config.yml"), GeneralSettings.builder().setUseDefaults(false).build(), LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setKeepAll(true).setVersioning(new BasicVersioning("version")).build());
         LANG = new Config(new File(getDataFolder(), "lang.yml"), getResource("lang.yml"), GeneralSettings.builder().setUseDefaults(false).build(), LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setKeepAll(true).setVersioning(new BasicVersioning("version")).build());
@@ -111,7 +112,14 @@ public final class AxSellwands extends AxPlugin {
 
         Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500[AxSellwands] Loaded plugin!"));
 
+        metrics = new AxMetrics(15);
+        metrics.start();
+
         if (CONFIG.getBoolean("update-notifier.enabled", true)) new UpdateNotifier(this, 5725);
+    }
+
+    public void disable() {
+        if (metrics != null) metrics.cancel();
     }
 
     public void updateFlags(FeatureFlags flags) {

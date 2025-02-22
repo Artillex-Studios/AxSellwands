@@ -14,17 +14,21 @@ public class CMIPricesHook implements PricesHook {
 
     @Override
     public double getPrice(ItemStack it) {
-        final WorthItem worth = manager.getWorthManager().getWorth(it);
+        ItemStack clone = it.clone();
+        clone.setAmount(1);
+        WorthItem worth = manager.getWorthManager().getWorth(clone);
         if (worth == null) return -1.0D;
 
-        return worth.getSellPrice() == 0.0D ? -1.0D : worth.getSellPrice();
+        return worth.getSellPrice() == 0.0D ? -1.0D : (worth.getSellPrice() * it.getAmount());
     }
 
     @Override
     public double getPrice(Player player, ItemStack it) {
-        final WorthItem worth = manager.getWorthManager().getWorth(it);
+        ItemStack clone = it.clone();
+        clone.setAmount(1);
+        final WorthItem worth = manager.getWorthManager().getWorth(clone);
         if (worth == null) return -1.0D;
 
-        return worth.getSellPrice() == 0.0D ? -1.0D : worth.getSellPrice();
+        return worth.getSellPrice() == 0.0D ? -1.0D : (worth.getSellPrice() * it.getAmount());
     }
 }
