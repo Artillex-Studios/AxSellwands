@@ -15,6 +15,7 @@ hooks:
   # - DynamicShop
   # - ExcellentShop
   # - CMI
+  # - EcoShop
   # - custom
   price-plugin: "builtin"
 
