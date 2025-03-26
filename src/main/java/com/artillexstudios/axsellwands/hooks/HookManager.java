@@ -22,15 +22,7 @@ import com.artillexstudios.axsellwands.hooks.protection.SaberFactionsHook;
 import com.artillexstudios.axsellwands.hooks.protection.SuperiorSkyBlock2Hook;
 import com.artillexstudios.axsellwands.hooks.protection.TownyHook;
 import com.artillexstudios.axsellwands.hooks.protection.WorldGuardHook;
-import com.artillexstudios.axsellwands.hooks.shop.AxGensHook;
-import com.artillexstudios.axsellwands.hooks.shop.BuiltinPrices;
-import com.artillexstudios.axsellwands.hooks.shop.CMIPricesHook;
-import com.artillexstudios.axsellwands.hooks.shop.DynamicShop3Hook;
-import com.artillexstudios.axsellwands.hooks.shop.EconomyShopGuiHook;
-import com.artillexstudios.axsellwands.hooks.shop.EssentialsHook;
-import com.artillexstudios.axsellwands.hooks.shop.ExcellentShopHook;
-import com.artillexstudios.axsellwands.hooks.shop.PricesHook;
-import com.artillexstudios.axsellwands.hooks.shop.ShopGUIPlusHook;
+import com.artillexstudios.axsellwands.hooks.shop.*;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -214,6 +206,16 @@ public class HookManager {
                     Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into EconomyShopGUI!"));
                 } else {
                     Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] EconomyShopGUI is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
+                }
+                break;
+            }
+
+            case "ECOSHOP": {
+                if (Bukkit.getPluginManager().getPlugin("EcoShop") != null) {
+                    shopPrices = new EcoShopHook();
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into EcoShop!"));
+                } else {
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] EcoShop is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
                 }
                 break;
             }
