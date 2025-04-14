@@ -31,6 +31,7 @@ import com.artillexstudios.axsellwands.hooks.shop.EssentialsHook;
 import com.artillexstudios.axsellwands.hooks.shop.ExcellentShopHook;
 import com.artillexstudios.axsellwands.hooks.shop.PricesHook;
 import com.artillexstudios.axsellwands.hooks.shop.ShopGUIPlusHook;
+import com.artillexstudios.axsellwands.hooks.shop.ShopMasterHook;
 import org.bukkit.Bukkit;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
@@ -182,6 +183,16 @@ public class HookManager {
                 if (Bukkit.getPluginManager().getPlugin("ShopGUIPlus") != null) {
                     shopPrices = new ShopGUIPlusHook();
                     Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into ShopGUIPlus!"));
+                } else {
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] ShopGUIPlus is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
+                }
+                break;
+            }
+
+            case "SHOPMASTER": {
+                if (Bukkit.getPluginManager().getPlugin("ShopMaster") != null) {
+                    shopPrices = new ShopMasterHook();
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into ShopMaster!"));
                 } else {
                     Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] ShopGUIPlus is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
                 }
