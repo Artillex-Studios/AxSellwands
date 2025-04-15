@@ -194,7 +194,7 @@ public class HookManager {
                     shopPrices = new ShopMasterHook();
                     Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into ShopMaster!"));
                 } else {
-                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] ShopGUIPlus is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] ShopMaster is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
                 }
                 break;
             }
