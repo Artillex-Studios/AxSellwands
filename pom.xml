@@ -400,10 +400,10 @@
             <version>4.1.4-STABLE</version>
             <scope>provided</scope>
         </dependency>
-        <dependency>
-            <groupId>xshyo.us</groupId>
-            <artifactId>ShopMaster</artifactId>
-            <version>1.0.0-STABLE</version>
+         <dependency>
+            <groupId>com.github.xShyo</groupId>
+            <artifactId>ShopMaster-API</artifactId>
+            <version>1.0.0</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>
