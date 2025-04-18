@@ -1,11 +1,11 @@
 package com.artillexstudios.axsellwands.commands;
 
+import com.artillexstudios.axapi.items.NBTWrapper;
 import com.artillexstudios.axapi.utils.ContainerUtils;
 import com.artillexstudios.axapi.utils.ItemBuilder;
 import com.artillexstudios.axapi.utils.StringUtils;
 import com.artillexstudios.axsellwands.hooks.HookManager;
 import com.artillexstudios.axsellwands.sellwands.Sellwand;
-import com.artillexstudios.axsellwands.utils.NBTUtils;
 import com.artillexstudios.axsellwands.utils.NumberUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.command.CommandSender;
@@ -45,30 +45,32 @@ public class Commands {
         float multiplier = sellwand.getMultiplier();
         int uses = sellwand.getUses();
 
-        final Map<String, String> replacements = new HashMap<>();
+        Map<String, String> replacements = new HashMap<>();
         replacements.put("%multiplier%", "" + multiplier);
         replacements.put("%uses%", "" + (uses == -1 ? LANG.getString("unlimited", "∞") : uses));
         replacements.put("%max-uses%", "" + (uses == -1 ? LANG.getString("unlimited", "∞") : uses));
         replacements.put("%sold-amount%", "" + 0);
         replacements.put("%sold-price%", "" + 0);
 
-        final ItemBuilder builder = new ItemBuilder(sellwand.getItemSection(), replacements);
-        final ItemStack it = builder.get();
+        ItemBuilder builder = new ItemBuilder(sellwand.getItemSection(), replacements);
+        ItemStack it = builder.get();
 
-        NBTUtils.writeToNBT(it, "axsellwands-type", sellwand.getId());
-        NBTUtils.writeToNBT(it, "axsellwands-multiplier", multiplier);
-        NBTUtils.writeToNBT(it, "axsellwands-lastused", 0L);
-        NBTUtils.writeToNBT(it, "axsellwands-uses", uses);
-        NBTUtils.writeToNBT(it, "axsellwands-max-uses", uses);
-        NBTUtils.writeToNBT(it, "axsellwands-sold-amount", 0);
-        NBTUtils.writeToNBT(it, "axsellwands-sold-price", 0D);
+        NBTWrapper wrapper = new NBTWrapper(it);
+        wrapper.set("axsellwands-type", sellwand.getId());
+        wrapper.set("axsellwands-multiplier", multiplier);
+        wrapper.set("axsellwands-lastused", 0L);
+        wrapper.set("axsellwands-uses", uses);
+        wrapper.set("axsellwands-max-uses", uses);
+        wrapper.set("axsellwands-sold-amount", 0);
+        wrapper.set("axsellwands-sold-price", 0D);
 
         int am = 1;
         if (amount != null) am = amount;
 
         for (int i = 0; i < am; i++) {
-            if (CONFIG.getInt("stacking-mode", 0) != 2)
-                NBTUtils.writeToNBT(it, "axsellwands-uuid", UUID.randomUUID());
+            if (CONFIG.getInt("stacking-mode", 0) != 2) wrapper.set("axsellwands-uuid", UUID.randomUUID());
+            wrapper.build();
+            wrapper.build();
             ContainerUtils.INSTANCE.addOrDrop(player.getInventory(), List.of(it.clone()), player.getLocation());
         }
 

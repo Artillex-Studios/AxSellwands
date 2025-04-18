@@ -1,7 +1,7 @@
 package com.artillexstudios.axsellwands.sellwands;
 
 import com.artillexstudios.axapi.config.Config;
-import com.artillexstudios.axapi.libs.boostedyaml.boostedyaml.block.implementation.Section;
+import com.artillexstudios.axapi.libs.boostedyaml.block.implementation.Section;
 import com.artillexstudios.axapi.utils.StringUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;

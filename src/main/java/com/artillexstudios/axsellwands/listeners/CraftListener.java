@@ -1,6 +1,6 @@
 package com.artillexstudios.axsellwands.listeners;
 
-import com.artillexstudios.axsellwands.utils.NBTUtils;
+import com.artillexstudios.axapi.items.NBTWrapper;
 import org.bukkit.Material;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
@@ -16,7 +16,8 @@ public class CraftListener implements Listener {
             if (it == null) continue;
             if (it.getType() == Material.AIR) continue;
 
-            if (NBTUtils.readStringFromNBT(it, "axsellwands-type") != null) {
+            NBTWrapper wrapper = new NBTWrapper(it);
+            if (wrapper.getString("axsellwands-type") != null) {
                 event.getInventory().setResult(null);
                 return;
             }
