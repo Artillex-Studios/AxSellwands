@@ -156,7 +156,7 @@ public class SellwandUseListener implements Listener {
             if (uses != -1) {
                 uses--;
 
-                if (uses < 0) {
+                if (uses <= 0) {
                     event.getItem().setAmount(0);
                     return;
                 }
