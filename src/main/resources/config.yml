@@ -29,6 +29,10 @@ hologram:
   # 20 ticks = 1 second
   stay-time-ticks: 60
 
+# under which durability should sellwands break?
+# 0 used to be the default in vanilla minecraft until 1.13
+minimum-durability: 1
+
 # should be plugin notify you if there is a new update?
 update-notifier:
   # if enabled, it will display the message in the console
@@ -37,4 +41,4 @@ update-notifier:
   on-join: true
 
 # do not change this
-version: 3
+version: 4
