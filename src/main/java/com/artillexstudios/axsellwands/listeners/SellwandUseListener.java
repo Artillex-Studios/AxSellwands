@@ -174,6 +174,7 @@ public class SellwandUseListener implements Listener {
 
             event.getItem().setItemMeta(builder.get().getItemMeta());
 
+            wrapper = new NBTWrapper(event.getItem());
             wrapper.set("axsellwands-uuid", uuid);
             wrapper.set("axsellwands-uses", uses);
             wrapper.set("axsellwands-lastused", System.currentTimeMillis());
