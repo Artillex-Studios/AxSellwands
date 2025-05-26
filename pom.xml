@@ -142,6 +142,10 @@
             <id>nightexpress-releases</id>
             <url>https://repo.nightexpressdev.com/releases</url>
         </repository>
+        <repository>
+            <id>auxilor</id>
+            <url>https://repo.auxilor.io/repository/maven-public/</url>
+        </repository>
     </repositories>
 
     <dependencyManagement>
@@ -206,6 +210,18 @@
             <groupId>com.github.brcdev-minecraft</groupId>
             <artifactId>shopgui-api</artifactId>
             <version>3.0.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.willfp</groupId>
+            <artifactId>EcoShop</artifactId>
+            <version>1.33.0</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.willfp</groupId>
+            <artifactId>eco</artifactId>
+            <version>6.75.2</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
