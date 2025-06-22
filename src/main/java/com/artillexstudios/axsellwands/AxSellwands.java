@@ -23,7 +23,6 @@ import com.artillexstudios.axsellwands.utils.CommandMessages;
 import com.artillexstudios.axsellwands.utils.FileUtils;
 import com.artillexstudios.axsellwands.utils.NumberUtils;
 import com.artillexstudios.axsellwands.utils.UpdateNotifier;
-import net.kyori.adventure.platform.bukkit.BukkitAudiences;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
 import org.bukkit.OfflinePlayer;
@@ -44,7 +43,6 @@ public final class AxSellwands extends AxPlugin {
     public static MessageUtils MESSAGEUTILS;
     private static AxPlugin instance;
     private static ThreadedQueue<Runnable> threadedQueue;
-    public static BukkitAudiences BUKKITAUDIENCES;
     private static AxMetrics metrics;
 
     public static ThreadedQueue<Runnable> getThreadedQueue() {
@@ -68,8 +66,6 @@ public final class AxSellwands extends AxPlugin {
 
         threadedQueue = new ThreadedQueue<>("AxSellwands-Datastore-thread");
 
-        BUKKITAUDIENCES = BukkitAudiences.create(this);
-
         HookManager.setupHooks();
         NumberUtils.reload();
 
@@ -80,7 +76,7 @@ public final class AxSellwands extends AxPlugin {
         });
 
         handler.getTranslator().add(new CommandMessages());
-        handler.setLocale(new Locale("en", "US"));
+        handler.setLocale(Locale.of("en", "US"));
 
         handler.getAutoCompleter().registerParameterSuggestions(Sellwand.class, (args, sender, command) -> {
             final List<String> suggestions = new ArrayList<>();
@@ -122,9 +118,9 @@ public final class AxSellwands extends AxPlugin {
         if (metrics != null) metrics.cancel();
     }
 
-    public void updateFlags(FeatureFlags flags) {
-        flags.USE_LEGACY_HEX_FORMATTER.set(true);
-        flags.PACKET_ENTITY_TRACKER_ENABLED.set(true);
-        flags.HOLOGRAM_UPDATE_TICKS.set(20L);
+    public void updateFlags() {
+        FeatureFlags.USE_LEGACY_HEX_FORMATTER.set(true);
+        FeatureFlags.PACKET_ENTITY_TRACKER_ENABLED.set(true);
+        FeatureFlags.HOLOGRAM_UPDATE_TICKS.set(20L);
     }
 }
