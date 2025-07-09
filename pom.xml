@@ -303,7 +303,7 @@
         <dependency>
             <groupId>com.artillexstudios</groupId>
             <artifactId>AxGensAPI</artifactId>
-            <version>8</version>
+            <version>13</version>
             <scope>provided</scope>
             <exclusions>
                 <exclusion>

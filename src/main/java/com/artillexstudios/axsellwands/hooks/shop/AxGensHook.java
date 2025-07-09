@@ -13,12 +13,12 @@ public class AxGensHook implements PricesHook {
     @Override
     public double getPrice(ItemStack it) {
         if (HookManager.getShopPrices() == null) return -1.0D;
-        return HookManager.getShopPrices().getPrice(it);
+        return HookManager.getPrice(it);
     }
 
     @Override
     public double getPrice(Player player, ItemStack it) {
         if (HookManager.getShopPrices() == null) return -1.0D;
-        return HookManager.getShopPrices().getPrice(player, it);
+        return HookManager.getPrice(player, it);
     }
 }
