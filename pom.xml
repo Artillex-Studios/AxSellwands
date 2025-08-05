@@ -3,7 +3,7 @@
 
     <groupId>com.artillexstudios</groupId>
     <artifactId>AxSellwands</artifactId>
-    <version>1.10.2</version>
+    <version>1.10.3</version>
     <packaging>jar</packaging>
 
     <name>AxSellwands</name>
@@ -291,7 +291,7 @@
             <groupId>com.iridium.iridiumskyblock</groupId>
             <artifactId>iridiumskyblock</artifactId>
             <version>LATEST</version>
-            <systemPath>${project.basedir}/libs/IridiumSkyblock-4.0.9.1.jar</systemPath>
+            <systemPath>${project.basedir}/libs/IridiumSkyblock-4.1.0.jar</systemPath>
             <scope>system</scope>
         </dependency>
         <dependency>
