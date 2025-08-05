@@ -33,6 +33,9 @@ hologram:
 # 0 used to be the default in vanilla minecraft until 1.13
 minimum-durability: 1
 
+# should the plugin sell items from even within containers? for example shulker boxes in a chest
+sell-from-within-containers: false
+
 # should be plugin notify you if there is a new update?
 update-notifier:
   # if enabled, it will display the message in the console
@@ -41,4 +44,4 @@ update-notifier:
   on-join: true
 
 # do not change this
-version: 4
+version: 5

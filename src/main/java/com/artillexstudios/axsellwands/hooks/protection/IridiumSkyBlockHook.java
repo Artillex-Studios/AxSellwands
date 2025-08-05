@@ -2,7 +2,7 @@ package com.artillexstudios.axsellwands.hooks.protection;
 
 import com.iridium.iridiumskyblock.api.IridiumSkyblockAPI;
 import com.iridium.iridiumskyblock.database.Island;
-import com.iridium.iridiumteams.PermissionType;
+import com.iridium.iridiumskyblock.dependencies.iridiumteams.PermissionType;
 import org.bukkit.Location;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;

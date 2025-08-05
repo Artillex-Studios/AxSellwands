@@ -3,7 +3,7 @@
 
     <groupId>com.artillexstudios</groupId>
     <artifactId>AxSellwands</artifactId>
-    <version>1.10.2</version>
+    <version>1.11.0</version>
     <packaging>jar</packaging>
 
     <name>AxSellwands</name>
@@ -159,7 +159,7 @@
         <dependency>
             <groupId>com.artillexstudios.axapi</groupId>
             <artifactId>axapi</artifactId>
-            <version>1.4.732</version>
+            <version>1.4.747</version>
             <scope>compile</scope>
             <classifier>all</classifier>
         </dependency>
@@ -291,7 +291,7 @@
             <groupId>com.iridium.iridiumskyblock</groupId>
             <artifactId>iridiumskyblock</artifactId>
             <version>LATEST</version>
-            <systemPath>${project.basedir}/libs/IridiumSkyblock-4.0.9.1.jar</systemPath>
+            <systemPath>${project.basedir}/libs/IridiumSkyblock-4.1.0.jar</systemPath>
             <scope>system</scope>
         </dependency>
         <dependency>
@@ -368,6 +368,18 @@
             <artifactId>Saber-Factions</artifactId>
             <version>4.1.4-STABLE</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.artillexstudios</groupId>
+            <artifactId>AxShulkers</artifactId>
+            <version>1.20.0</version>
+            <scope>provided</scope>
+            <exclusions>
+                <exclusion>
+                    <groupId>*</groupId>
+                    <artifactId>*</artifactId>
+                </exclusion>
+            </exclusions>
         </dependency>
     </dependencies>
 

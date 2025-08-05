@@ -12,10 +12,12 @@ import com.artillexstudios.axsellwands.sellwands.Sellwands;
 import com.artillexstudios.axsellwands.utils.HistoryUtils;
 import com.artillexstudios.axsellwands.utils.HologramUtils;
 import com.artillexstudios.axsellwands.utils.NumberUtils;
+import com.artillexstudios.axsellwands.utils.ShulkerUtils;
 import org.bukkit.Bukkit;
 import org.bukkit.Material;
 import org.bukkit.Particle;
 import org.bukkit.Sound;
+import org.bukkit.Tag;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
@@ -27,9 +29,13 @@ import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.Collections;
 import java.util.HashMap;
+import java.util.List;
 import java.util.Map;
+import java.util.Objects;
 import java.util.UUID;
 
 import static com.artillexstudios.axsellwands.AxSellwands.CONFIG;
@@ -51,15 +57,26 @@ public class SellwandUseListener implements Listener {
         if (sellwand == null) return;
         Player player = event.getPlayer();
 
-        ItemStack[] contents;
-        if (block.getState() instanceof Container)
-            contents = ((Container) block.getState()).getInventory().getContents();
+        ItemStack[] originals;
+        if (block.getState() instanceof Container container)
+            originals = container.getInventory().getContents();
         else if (block.getType() == Material.ENDER_CHEST)
-            contents = player.getEnderChest().getContents();
+            originals = player.getEnderChest().getContents();
         else return;
 
-        boolean hasBypass = player.hasPermission("axsellwands.admin");
+        List<ItemStack> contents = new ArrayList<>(Arrays.stream(originals).filter(Objects::nonNull).toList());
 
+        boolean containerSell = CONFIG.getBoolean("sell-from-within-containers", false);
+        if (containerSell) {
+            for (ItemStack content : new ArrayList<>(contents)) {
+                if (!Tag.SHULKER_BOXES.isTagged(content.getType())) continue;
+                contents.addAll(Arrays.asList(ShulkerUtils.getShulkerContents(content)));
+            }
+        }
+
+        contents.removeIf(Objects::isNull);
+
+        boolean hasBypass = player.hasPermission("axsellwands.admin");
         if (!hasBypass && !HookManager.canBuildAt(player, block.getLocation())) {
             MESSAGEUTILS.sendLang(player, "no-permission");
             return;
@@ -89,7 +106,6 @@ public class SellwandUseListener implements Listener {
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Map<Material, Integer> items = new HashMap<>();
             for (ItemStack it : contents) {
-                if (it == null) continue;
                 double price = HookManager.getShopPrices().getPrice(player, it);
                 if (price <= 0) continue;
                 price *= multiplier;
@@ -103,6 +119,13 @@ public class SellwandUseListener implements Listener {
                     items.put(it.getType(), it.getAmount());
 
                 it.setAmount(0);
+            }
+
+            if (containerSell) {
+                for (ItemStack content : contents) {
+                    if (!Tag.SHULKER_BOXES.isTagged(content.getType())) continue;
+                    ShulkerUtils.updateShulker(content);
+                }
             }
 
             if (newSoldAmount <= 0 || newSoldPrice <= 0) {
@@ -170,7 +193,7 @@ public class SellwandUseListener implements Listener {
             replacements.put("%sold-price%", NumberUtils.formatNumber(soldPrice + newSoldPrice));
 
             Sellwand wand = Sellwands.getSellwands().get(type);
-            ItemBuilder builder = new ItemBuilder(wand.getItemSection(), replacements);
+            ItemBuilder builder = ItemBuilder.create(wand.getItemSection(), replacements);
 
             event.getItem().setItemMeta(builder.get().getItemMeta());
 
@@ -188,7 +211,6 @@ public class SellwandUseListener implements Listener {
             if (block.getState() instanceof Container container) container.update();
         } else {
             for (ItemStack it : contents) {
-                if (it == null) continue;
                 double price = HookManager.getShopPrices().getPrice(player, it);
                 if (price == -1.0D) continue;
                 price *= multiplier;

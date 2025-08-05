@@ -7,6 +7,7 @@ import com.artillexstudios.axsellwands.hooks.currency.CurrencyHook;
 import com.artillexstudios.axsellwands.hooks.currency.PlayerPointsHook;
 import com.artillexstudios.axsellwands.hooks.currency.RoyaleEconomyHook;
 import com.artillexstudios.axsellwands.hooks.currency.VaultHook;
+import com.artillexstudios.axsellwands.hooks.other.AxShulkersHook;
 import com.artillexstudios.axsellwands.hooks.other.Placeholders;
 import com.artillexstudios.axsellwands.hooks.protection.BentoBoxHook;
 import com.artillexstudios.axsellwands.hooks.protection.GriefPreventionHook;
@@ -46,9 +47,14 @@ public class HookManager {
     private static CurrencyHook currency = null;
     private static PricesHook shopPrices = null;
     private static final HashSet<ProtectionHook> PROTECTION_HOOKS = new HashSet<>();
+    private static AxShulkersHook axShulkersHook = null;
 
     public static void setupHooks() {
         updateHooks();
+
+        if (Bukkit.getPluginManager().getPlugin("AxShulkers") != null) {
+            axShulkersHook = new AxShulkersHook();
+        }
 
         if (HOOKS.getBoolean("hook-settings.PlaceholderAPI.register", true) && Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new Placeholders().register();
@@ -290,5 +296,9 @@ public class HookManager {
         }
 
         return true;
+    }
+
+    public static AxShulkersHook getAxShulkersHook() {
+        return axShulkersHook;
     }
 }

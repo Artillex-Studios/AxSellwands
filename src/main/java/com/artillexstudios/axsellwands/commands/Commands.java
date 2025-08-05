@@ -52,7 +52,7 @@ public class Commands {
         replacements.put("%sold-amount%", "" + 0);
         replacements.put("%sold-price%", "" + 0);
 
-        ItemBuilder builder = new ItemBuilder(sellwand.getItemSection(), replacements);
+        ItemBuilder builder = ItemBuilder.create(sellwand.getItemSection(), replacements);
         ItemStack it = builder.get();
 
         NBTWrapper wrapper = new NBTWrapper(it);
