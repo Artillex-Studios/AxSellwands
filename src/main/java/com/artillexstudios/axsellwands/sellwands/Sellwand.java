@@ -53,10 +53,18 @@ public class Sellwand {
         this.itemSection = file.getSection("item");
         List<String> Empty = new ArrayList<>();
         for (String world_name : file.getStringList("disallowed-worlds",Empty)) {
-            disallowed_worlds.add(world_name.toUpperCase());
+            try {
+                disallowed_worlds.add(world_name.toUpperCase());
+            } catch (Exception ex){
+                Bukkit.getLogger().warning(Bukkit.getServer().getName()+" +> "+ex.getMessage());
+            }
         }
         for (String gamemode : file.getStringList("disallowed-gamemodes",Empty)) {
-            disallowed_gamemodes.add(gamemode.toUpperCase());
+            try {
+                disallowed_gamemodes.add(gamemode.toUpperCase());
+            } catch (Exception ex){
+                Bukkit.getLogger().warning(Bukkit.getServer().getName()+" +> "+ex.getMessage());
+            }
         }
         for (String str : file.getStringList("disallowed-containers",Empty)) {
 
