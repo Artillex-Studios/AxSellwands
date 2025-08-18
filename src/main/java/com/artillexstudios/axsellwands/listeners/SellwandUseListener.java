@@ -74,7 +74,7 @@ public class SellwandUseListener implements Listener {
             MESSAGEUTILS.sendLang(player, "cooldown", Collections.singletonMap("%time%", Long.toString(Math.round((sellwand.getCooldown() - System.currentTimeMillis() + lastUsed) / 1000D))));
             return;
         }
-        if(sellwand.getDisallowed_gamemodes().contains(player.getWorld().getGameMode().toUpperCase())) {
+        if(sellwand.getDisallowed_gamemodes().contains(player.getGameMode().toUpperCase())) {
             MESSAGEUTILS.sendLang(player, "disallowed-gamemode", Collections.singletonMap("%gamemode%",player.getGameMode().name()));
             return;
         }
