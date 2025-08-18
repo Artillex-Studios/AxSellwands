@@ -50,7 +50,6 @@ public class SellwandUseListener implements Listener {
         event.setCancelled(true);
         if (sellwand == null) return;
         Player player = event.getPlayer();
-
         ItemStack[] contents;
         if (block.getState() instanceof Container)
             contents = ((Container) block.getState()).getInventory().getContents();
@@ -73,6 +72,14 @@ public class SellwandUseListener implements Listener {
         Long lastUsed = wrapper.getLong("axsellwands-lastused");
         if (lastUsed != null && System.currentTimeMillis() - lastUsed < sellwand.getCooldown() && event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             MESSAGEUTILS.sendLang(player, "cooldown", Collections.singletonMap("%time%", Long.toString(Math.round((sellwand.getCooldown() - System.currentTimeMillis() + lastUsed) / 1000D))));
+            return;
+        }
+        if(sellwand.getDisallowed_gamemodes().contains(player.getWorld().getName().toUpperCase())) {
+            MESSAGEUTILS.sendLang(player, "disallowed-gamemode", Collections.singletonMap("%gamemode%",player.getGameMode().name()));
+            return;
+        }
+        if(sellwand.getDisallowed_gamemodes().contains(player.getGameMode().name().toUpperCase())) {
+            MESSAGEUTILS.sendLang(player, "disallowed-world", Collections.singletonMap("%world%",player.getWorld().getName()));
             return;
         }
 

@@ -39,6 +39,9 @@ update-notifier:
   enabled: true
   # if enabled, it will broadcast the update message to all players who have the <plugin-name>.update-notify permission
   on-join: true
-
+gamemode-blocklist:
+  - CREATIVE
+  - SPECTATOR
+metrics: true
 # do not change this
-version: 4
+version: 5

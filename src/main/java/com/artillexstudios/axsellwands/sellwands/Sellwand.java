@@ -3,11 +3,16 @@ package com.artillexstudios.axsellwands.sellwands;
 import com.artillexstudios.axapi.config.Config;
 import com.artillexstudios.axapi.libs.boostedyaml.block.implementation.Section;
 import com.artillexstudios.axapi.utils.StringUtils;
+import com.artillexstudios.axsellwands.AxSellwands;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.Material;
+import org.bukkit.World;
 import org.jetbrains.annotations.NotNull;
 
+import java.util.ArrayList;
 import java.util.HashSet;
+import java.util.List;
 
 public class Sellwand {
     private final String id;
@@ -19,6 +24,16 @@ public class Sellwand {
     private final Section itemSection;
     private final HashSet<Material> disallowed = new HashSet<>();
     private final HashSet<Material> allowed = new HashSet<>();
+    private final List<String> disallowed_gamemodes = new ArrayList<>();
+    private final List<String> disallowed_worlds = new ArrayList<>();
+
+    public List<String> getDisallowed_gamemodes() {
+        return disallowed_gamemodes;
+    }
+
+    public List<String> getDisallowed_worlds() {
+        return disallowed_worlds;
+    }
 
     public Sellwand(String id, @NotNull Config file) {
         this.id = id;
@@ -36,8 +51,15 @@ public class Sellwand {
         this.uses = file.getInt("uses", -1);
         this.cooldown = file.getLong("cooldown-milliseconds", 0);
         this.itemSection = file.getSection("item");
+        List<String> Empty = new ArrayList<>();
+        for (String world_name : file.getStringList("disallowed-worlds",Empty)) {
+            disallowed_worlds.add(world_name.toUpperCase());
+        }
+        for (String gamemode : file.getStringList("disallowed-gamemodes",Empty)) {
+            disallowed_gamemodes.add(gamemode.toUpperCase());
+        }
+        for (String str : file.getStringList("disallowed-containers",Empty)) {
 
-        for (String str : file.getStringList("disallowed-containers")) {
             final Material material = Material.getMaterial(str);
             if (material == null) {
                 Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500[AxSellwands] Material " + str + " does not exists, skipping!"));
@@ -46,7 +68,7 @@ public class Sellwand {
             disallowed.add(material);
         }
 
-        for (String str : file.getStringList("allowed-containers")) {
+        for (String str : file.getStringList("allowed-containers",Empty)) {
             final Material material = Material.getMaterial(str);
             if (material == null) {
                 Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500[AxSellwands] Material " + str + " does not exists, skipping!"));

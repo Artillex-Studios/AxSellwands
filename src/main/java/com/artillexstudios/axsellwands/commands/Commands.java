@@ -41,9 +41,12 @@ public class Commands {
     }
 
     @Subcommand("give") // todo: add optional overrides for uses, multiplier
-    public void give(@NotNull CommandSender sender, Player player, @NotNull Sellwand sellwand, @Optional @Range(min = 1, max = 64) Integer amount) {
+    public void give(@NotNull CommandSender sender, Player player, @NotNull Sellwand sellwand, @Optional @Range(min = 1, max = 64) Integer amount, @Optional @Range(min = 1, max = 9999) Integer CustomUse) {
         float multiplier = sellwand.getMultiplier();
         int uses = sellwand.getUses();
+        if(CustomUse!=null){
+            uses = CustomUse;
+        }
 
         Map<String, String> replacements = new HashMap<>();
         replacements.put("%multiplier%", "" + multiplier);

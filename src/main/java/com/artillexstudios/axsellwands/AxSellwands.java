@@ -25,6 +25,7 @@ import com.artillexstudios.axsellwands.utils.NumberUtils;
 import com.artillexstudios.axsellwands.utils.UpdateNotifier;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
+import org.bukkit.GameMode;
 import org.bukkit.OfflinePlayer;
 import org.bukkit.entity.HumanEntity;
 import revxrsal.commands.bukkit.BukkitCommandHandler;
@@ -56,9 +57,8 @@ public final class AxSellwands extends AxPlugin {
     public void enable() {
         instance = this;
 
-        new Metrics(this, 21332);
-
         CONFIG = new Config(new File(getDataFolder(), "config.yml"), getResource("config.yml"), GeneralSettings.builder().setUseDefaults(false).build(), LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setKeepAll(true).setVersioning(new BasicVersioning("version")).build());
+
         LANG = new Config(new File(getDataFolder(), "lang.yml"), getResource("lang.yml"), GeneralSettings.builder().setUseDefaults(false).build(), LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setKeepAll(true).setVersioning(new BasicVersioning("version")).build());
         HOOKS = new Config(new File(getDataFolder(), "hooks.yml"), getResource("hooks.yml"), GeneralSettings.builder().setUseDefaults(false).build(), LoaderSettings.builder().setAutoUpdate(true).build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setKeepAll(true).setVersioning(new BasicVersioning("version")).build());
 
@@ -100,16 +100,16 @@ public final class AxSellwands extends AxPlugin {
         if (FileUtils.PLUGIN_DIRECTORY.resolve("sellwands/").toFile().mkdirs()) {
             FileUtils.copyFromResource("sellwands");
         }
-
         Sellwands.reload();
         getServer().getPluginManager().registerEvents(new SellwandUseListener(), this);
         getServer().getPluginManager().registerEvents(new CraftListener(), this);
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
-
         Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500[AxSellwands] Loaded plugin!"));
-
-        metrics = new AxMetrics(this, 15);
-        metrics.start();
+        if( CONFIG.getBoolean("metrics",true) ) {
+            new Metrics(this, 21332);
+            metrics = new AxMetrics(this, 15);
+            metrics.start();
+        }
 
         if (CONFIG.getBoolean("update-notifier.enabled", true)) new UpdateNotifier(this, 5725);
     }
