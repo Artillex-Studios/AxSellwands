@@ -219,12 +219,6 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>nl.rutgerkok</groupId>
-            <artifactId>blocklocker</artifactId>
-            <version>1.13</version>
-            <scope>provided</scope>
-        </dependency>
-        <dependency>
             <groupId>org.black_ixx</groupId>
             <artifactId>playerpoints</artifactId>
             <version>3.2.6</version>
@@ -384,6 +378,13 @@
             <artifactId>Saber-Factions</artifactId>
             <version>4.1.4-STABLE</version>
             <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>nl.rutgerkok</groupId>
+            <artifactId>blocklocker</artifactId>
+            <version>1.13</version>
+            <systemPath>${project.basedir}/libs/BlockLocker.jar</systemPath>
+            <scope>system</scope>
         </dependency>
     </dependencies>
 
