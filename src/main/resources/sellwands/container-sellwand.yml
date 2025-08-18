@@ -46,8 +46,8 @@ disallowed-containers: []
 disallowed-gamemodes:
   - CREATIVE
   - SPECTATOR
-  -
-  #disallowed worlds
+
+#disallowed worlds
 disallowed-worlds:
   - SPAWN
   - HUB

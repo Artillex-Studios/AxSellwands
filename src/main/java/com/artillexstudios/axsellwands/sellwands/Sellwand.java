@@ -54,14 +54,14 @@ public class Sellwand {
         List<String> Empty = new ArrayList<>();
         for (String world_name : file.getStringList("disallowed-worlds",Empty)) {
             try {
-                disallowed_worlds.add(world_name.toUpperCase());
+                if(!world_name.isEmpty()) disallowed_worlds.add(world_name.toUpperCase());
             } catch (Exception ex){
                 Bukkit.getLogger().warning(Bukkit.getServer().getName()+" +> "+ex.getMessage());
             }
         }
         for (String gamemode : file.getStringList("disallowed-gamemodes",Empty)) {
             try {
-                disallowed_gamemodes.add(gamemode.toUpperCase());
+                if(!gamemode.isEmpty()) disallowed_gamemodes.add(gamemode.toUpperCase());
             } catch (Exception ex){
                 Bukkit.getLogger().warning(Bukkit.getServer().getName()+" +> "+ex.getMessage());
             }

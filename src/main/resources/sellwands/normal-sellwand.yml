@@ -34,8 +34,8 @@ cooldown-milliseconds: 0
 disallowed-gamemodes:
   - CREATIVE
   - SPECTATOR
-  -
-  #disallowed worlds
+
+#disallowed worlds
 disallowed-worlds:
   - SPAWN
   - HUB
