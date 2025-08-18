@@ -27,6 +27,10 @@ hook-settings:
     register: true
   GriefPrevention:
     register: true
+  GriefDefender:
+    register: true
+  BlockLocker:
+    register: true
   HuskTowns:
     register: true
   IridiumSkyBlock:

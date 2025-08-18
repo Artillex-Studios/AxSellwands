@@ -29,3 +29,14 @@ uses: -1
 # how often should the player be able to sell
 # set to 0 to disable
 cooldown-milliseconds: 3000
+
+
+#disallowed gamemodes
+disallowed-gamemodes:
+  - CREATIVE
+  - SPECTATOR
+
+#disallowed worlds
+disallowed-worlds:
+  - SPAWN
+  - HUB

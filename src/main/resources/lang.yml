@@ -16,6 +16,9 @@ reload:
 sellwand-give: "&#FFAA55You have given &f%amount%x %sellwand% &#FFAA55to &f%player%&#FFAA55!"
 sellwand-got: "&#FFAA55You have received &f%amount%x %sellwand%&#FFAA55!"
 
+disallowed-gamemode: "&#FF5555You cannot use sellwand in &f%gamemode% &#FF5555mode!"
+disallowed-world: "&#FF5555You cannot use sellwand in world &f%world%&#FF5555!"
+
 nothing-sold: "&#FFAA55Nothing in the container is sellable!"
 
 cooldown: "&#FFAA55You must wait another &f%time% seconds &#FFAA55before using this sellwand again!"
