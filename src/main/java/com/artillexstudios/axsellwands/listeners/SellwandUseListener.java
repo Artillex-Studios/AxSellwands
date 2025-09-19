@@ -123,7 +123,16 @@ public class SellwandUseListener implements Listener {
                 str.append(e.getValue()).append("x ").append(e.getKey().name());
             }
             str.append("]");
-            HistoryUtils.writeToHistory(String.format("%s sold %dx items %s and earned %s (multiplier: %s, uses: %d)", player.getName(), newSoldAmount, str, newSoldPrice, multiplier, uses - 1));
+            HistoryUtils.writeToHistory(String.format(
+"%s sold %dx items %s at [x=%d, y=%d, z=%d] and earned %s (multiplier: %s, uses: %d)",
+  player.getName(),
+  newSoldAmount,
+  str,
+  loc.getBlockX(), loc.getBlockY(), loc.getBlockZ(),
+  newSoldPrice,
+  multiplier,
+  uses - 1
+));
 
             HashMap<String, String> replacements = new HashMap<>();
             replacements.put("%amount%", "" + newSoldAmount);
