@@ -8,7 +8,7 @@ import org.bukkit.command.CommandSender;
 import org.bukkit.entity.Player;
 import org.jetbrains.annotations.NotNull;
 import revxrsal.commands.annotation.Command;
-import revxrsal.commands.annotation.CommandPlaceholder;
+import revxrsal.commands.annotation.DefaultFor;
 import revxrsal.commands.annotation.Optional;
 import revxrsal.commands.annotation.Range;
 import revxrsal.commands.annotation.Subcommand;
@@ -18,12 +18,7 @@ import revxrsal.commands.bukkit.annotation.CommandPermission;
 @CommandPermission("axsellwands.admin")
 public class Commands {
 
-    @CommandPlaceholder
-    public void main(@NotNull CommandSender sender) {
-        Help.INSTANCE.execute(sender);
-    }
-
-    @Subcommand("help")
+    @DefaultFor({"~", "~ help"})
     public void help(@NotNull CommandSender sender) {
         Help.INSTANCE.execute(sender);
     }

@@ -32,12 +32,12 @@ public final class AxSellwands extends AxPlugin {
     public static Config HOOKS;
     public static MessageUtils MESSAGEUTILS;
     private static AxPlugin instance;
-    private static ThreadedQueue<Runnable> threadedQueue;
+//    private static ThreadedQueue<Runnable> threadedQueue;
     private static AxMetrics metrics;
 
-    public static ThreadedQueue<Runnable> getThreadedQueue() {
-        return threadedQueue;
-    }
+//    public static ThreadedQueue<Runnable> getThreadedQueue() {
+//        return threadedQueue;
+//    }
 
     public static AxPlugin getInstance() {
         return instance;
@@ -54,7 +54,7 @@ public final class AxSellwands extends AxPlugin {
 
         MESSAGEUTILS = new MessageUtils(LANG.getBackingDocument(), "prefix", CONFIG.getBackingDocument());
 
-        threadedQueue = new ThreadedQueue<>("AxSellwands-Datastore-thread");
+//        threadedQueue = new ThreadedQueue<>("AxSellwands-Datastore-thread");
 
         HookManager.setupHooks();
         NumberUtils.reload();

@@ -1,219 +1,74 @@
 package com.artillexstudios.axsellwands.utils;
 
 import com.artillexstudios.axapi.utils.StringUtils;
-import org.jetbrains.annotations.NotNull;
-import revxrsal.commands.bukkit.actor.BukkitCommandActor;
-import revxrsal.commands.bukkit.exception.*;
-import revxrsal.commands.exception.*;
-import revxrsal.commands.node.ParameterNode;
+import revxrsal.commands.locales.LocaleReader;
+
+import java.util.Locale;
 
 import static com.artillexstudios.axsellwands.AxSellwands.CONFIG;
 import static com.artillexstudios.axsellwands.AxSellwands.LANG;
 
-public class CommandMessages extends BukkitExceptionHandler {
+public class CommandMessages implements LocaleReader {
 
-    @HandleException
-    public void onInvalidPlayer(InvalidPlayerException e, BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-player")
-                                .replace("%player%", e.input())
-        ));
+    @Override
+    public boolean containsKey(String s) {
+        return true;
     }
 
-    @HandleException
-    public void onInvalidWorld(InvalidWorldException e, BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-value")
-                                .replace("%value%", e.input())
-        ));
-    }
-
-    @HandleException
-    public void onInvalidWorld(MissingLocationParameterException e, BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-value")
-                                .replace("%value%", e.input())
-        ));
-    }
-
-    @HandleException
-    public void onSenderNotConsole(SenderNotConsoleException e, BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.console-only")
-        ));
-    }
-
-    @HandleException
-    public void onSenderNotPlayer(SenderNotPlayerException e, BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.player-only")
-        ));
-    }
-
-    @HandleException
-    public void onMalformedEntitySelector(MalformedEntitySelectorException e, BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-selector")
-        ));
-    }
-
-    @HandleException
-    public void onNonPlayerEntities(NonPlayerEntitiesException e, BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-selector")
-        ));
-    }
-
-    @HandleException
-    public void onMoreThanOneEntity(MoreThanOneEntityException e, BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-selector")
-        ));
-    }
-
-    @HandleException
-    public void onEmptyEntitySelector(EmptyEntitySelectorException e, BukkitCommandActor actor) {
-        try {
-            throw new RuntimeException();
-        } catch (Exception ex) {
-            ex.printStackTrace();
+    @Override
+    public String get(String s) {
+        String res;
+        switch (s) {
+            case "invalid-enum", "invalid-number", "invalid-uuid", "invalid-url", "invalid-boolean": {
+                res = LANG.getString("commands.invalid-value")
+                        .replace("%value%", "{0}");
+                break;
+            }
+            case "missing-argument": {
+                res = LANG.getString("commands.missing-argument")
+                        .replace("%value%", "{0}");
+                break;
+            }
+            case "no-permission": {
+                res = LANG.getString("commands.no-permission");
+                break;
+            }
+            case "number-not-in-range": {
+                res = LANG.getString("commands.out-of-range")
+                        .replace("%number%", "{0}")
+                        .replace("%min%", "{1}")
+                        .replace("%max%", "{2}");
+                break;
+            }
+            case "must-be-player": {
+                res = LANG.getString("commands.player-only");
+                break;
+            }
+            case "must-be-console": {
+                res = LANG.getString("commands.console-only");
+                break;
+            }
+            case "invalid-player": {
+                res = LANG.getString("commands.invalid-player")
+                        .replace("%player%", "{0}");
+                break;
+            }
+            case "invalid-selector": {
+                res = LANG.getString("commands.invalid-selector");
+                break;
+            }
+            default:  {
+                res = LANG.getString("commands.invalid-command");
+                break;
+            }
         }
-//        actor.error(StringUtils.formatToString(
-//                CONFIG.getString("prefix", "") +
-//                        LANG.getString("commands.invalid-selector")
-//        ));
+        return StringUtils.formatToString(CONFIG.getString("prefix", "") + res);
     }
 
-    @HandleException
-    public void onEnumNotFound(@NotNull EnumNotFoundException e, @NotNull BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-value")
-                                .replace("%value%", e.input())
-        ));
-    }
+    private final Locale locale = Locale.of("en", "US");
 
-    @HandleException
-    public void onExpectedLiteral(@NotNull ExpectedLiteralException e, @NotNull BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-command")
-        ));
-    }
-
-    @HandleException
-    public void onInputParse(@NotNull InputParseException e, @NotNull BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-command")
-        ));
-    }
-
-    @HandleException
-    public void onInvalidListSize(@NotNull InvalidListSizeException e, @NotNull BukkitCommandActor actor, @NotNull ParameterNode<BukkitCommandActor, ?> parameter) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-command")
-        ));
-    }
-
-    @HandleException
-    public void onInvalidStringSize(@NotNull InvalidStringSizeException e, @NotNull BukkitCommandActor actor, @NotNull ParameterNode<BukkitCommandActor, ?> parameter) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-command")
-        ));
-    }
-
-    @HandleException
-    public void onInvalidBoolean(@NotNull InvalidBooleanException e, @NotNull BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-value")
-                                .replace("%value%", e.input())
-        ));
-    }
-
-    @HandleException
-    public void onInvalidDecimal(@NotNull InvalidDecimalException e, @NotNull BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-value")
-                                .replace("%value%", e.input())
-        ));
-    }
-
-    @HandleException
-    public void onInvalidInteger(@NotNull InvalidIntegerException e, @NotNull BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-value")
-                                .replace("%value%", e.input())
-        ));
-    }
-
-    @HandleException
-    public void onInvalidUUID(@NotNull InvalidUUIDException e, @NotNull BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-value")
-                                .replace("%value%", e.input())
-        ));
-    }
-
-    @HandleException
-    public void onMissingArgument(@NotNull MissingArgumentException e, @NotNull BukkitCommandActor actor, @NotNull ParameterNode<BukkitCommandActor, ?> parameter) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.missing-argument").replace("%value%", parameter.name())
-        ));
-        try {
-            throw new RuntimeException();
-        } catch (Exception ex) {
-            ex.printStackTrace();
-        }
-    }
-
-    @HandleException
-    public void onNoPermission(@NotNull NoPermissionException e, @NotNull BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.no-permission")
-        ));
-    }
-
-    @HandleException
-    public void onNumberNotInRange(@NotNull NumberNotInRangeException e, @NotNull BukkitCommandActor actor, @NotNull ParameterNode<BukkitCommandActor, Number> parameter) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.out-of-range")
-                                .replace("%number%", fmt(e.input()))
-                                .replace("%min%", fmt(e.minimum()))
-                                .replace("%max%", fmt(e.maximum()))
-        ));
-    }
-
-    @HandleException
-    public void onInvalidHelpPage(@NotNull InvalidHelpPageException e, @NotNull BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-command")
-        ));
-    }
-
-    @HandleException
-    public void onUnknownCommand(@NotNull UnknownCommandException e, @NotNull BukkitCommandActor actor) {
-        actor.error(StringUtils.formatToString(
-                CONFIG.getString("prefix", "") +
-                        LANG.getString("commands.invalid-command")
-        ));
+    @Override
+    public Locale getLocale() {
+        return locale;
     }
 }
