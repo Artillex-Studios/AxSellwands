@@ -12,29 +12,19 @@ import com.artillexstudios.axapi.metrics.AxMetrics;
 import com.artillexstudios.axapi.utils.MessageUtils;
 import com.artillexstudios.axapi.utils.StringUtils;
 import com.artillexstudios.axapi.utils.featureflags.FeatureFlags;
-import com.artillexstudios.axsellwands.commands.Commands;
+import com.artillexstudios.axsellwands.commands.CommandManager;
 import com.artillexstudios.axsellwands.hooks.HookManager;
 import com.artillexstudios.axsellwands.listeners.CraftListener;
 import com.artillexstudios.axsellwands.listeners.InventoryClickListener;
 import com.artillexstudios.axsellwands.listeners.SellwandUseListener;
-import com.artillexstudios.axsellwands.sellwands.Sellwand;
 import com.artillexstudios.axsellwands.sellwands.Sellwands;
-import com.artillexstudios.axsellwands.utils.CommandMessages;
 import com.artillexstudios.axsellwands.utils.FileUtils;
 import com.artillexstudios.axsellwands.utils.NumberUtils;
 import com.artillexstudios.axsellwands.utils.UpdateNotifier;
 import org.bstats.bukkit.Metrics;
 import org.bukkit.Bukkit;
-import org.bukkit.OfflinePlayer;
-import org.bukkit.entity.HumanEntity;
-import revxrsal.commands.bukkit.BukkitCommandHandler;
-import revxrsal.commands.exception.CommandErrorException;
 
 import java.io.File;
-import java.util.ArrayList;
-import java.util.List;
-import java.util.Locale;
-import java.util.stream.Collectors;
 
 public final class AxSellwands extends AxPlugin {
     public static Config CONFIG;
@@ -68,34 +58,7 @@ public final class AxSellwands extends AxPlugin {
 
         HookManager.setupHooks();
         NumberUtils.reload();
-
-        final BukkitCommandHandler handler = BukkitCommandHandler.create(instance);
-
-        handler.getAutoCompleter().registerParameterSuggestions(OfflinePlayer.class, (args, sender, command) -> {
-            return Bukkit.getOnlinePlayers().stream().map(HumanEntity::getName).collect(Collectors.toSet());
-        });
-
-        handler.getTranslator().add(new CommandMessages());
-        handler.setLocale(Locale.of("en", "US"));
-
-        handler.getAutoCompleter().registerParameterSuggestions(Sellwand.class, (args, sender, command) -> {
-            final List<String> suggestions = new ArrayList<>();
-            Sellwands.getSellwands().forEach((id, sellwand) -> suggestions.add(id));
-
-            if (suggestions.isEmpty())
-                sender.error("There are no sellwands configured! If this is your first install, contact support or copy files from out github resources!");
-
-            return suggestions;
-        });
-
-        handler.registerValueResolver(Sellwand.class, resolver -> {
-            final String str = resolver.popForParameter();
-            if (Sellwands.getSellwands().containsKey(str))
-                return Sellwands.getSellwands().get(str);
-            throw new CommandErrorException("invalid-command", str);
-        });
-
-        handler.register(new Commands());
+        CommandManager.load();
 
         if (FileUtils.PLUGIN_DIRECTORY.resolve("sellwands/").toFile().mkdirs()) {
             FileUtils.copyFromResource("sellwands");

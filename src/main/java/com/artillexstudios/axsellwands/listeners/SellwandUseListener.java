@@ -7,6 +7,7 @@ import com.artillexstudios.axapi.utils.StringUtils;
 import com.artillexstudios.axapi.utils.Title;
 import com.artillexstudios.axsellwands.api.events.AxSellwandsSellEvent;
 import com.artillexstudios.axsellwands.hooks.HookManager;
+import com.artillexstudios.axsellwands.hooks.container.ContainerHook;
 import com.artillexstudios.axsellwands.sellwands.Sellwand;
 import com.artillexstudios.axsellwands.sellwands.Sellwands;
 import com.artillexstudios.axsellwands.utils.HistoryUtils;
@@ -20,7 +21,6 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
-import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -38,7 +38,7 @@ import static com.artillexstudios.axsellwands.AxSellwands.MESSAGEUTILS;
 
 public class SellwandUseListener implements Listener {
 
-    @EventHandler (ignoreCancelled = true, priority = EventPriority.HIGHEST)
+    @EventHandler(ignoreCancelled = true)
     public void onInteract(@NotNull PlayerInteractEvent event) {
         if (event.getItem() == null) return;
         Block block = event.getClickedBlock();
@@ -52,11 +52,16 @@ public class SellwandUseListener implements Listener {
         Player player = event.getPlayer();
 
         ItemStack[] contents;
-        if (block.getState() instanceof Container)
+        ContainerHook containerHook = HookManager.getContainerAt(player, block);
+        if (containerHook != null) {
+            contents = containerHook.getItems(player, block).toArray(new ItemStack[0]);
+        } else if (block.getState() instanceof Container) {
             contents = ((Container) block.getState()).getInventory().getContents();
-        else if (block.getType() == Material.ENDER_CHEST)
+        } else if (block.getType() == Material.ENDER_CHEST) {
             contents = player.getEnderChest().getContents();
-        else return;
+        } else {
+            return; // not a container
+        }
 
         boolean hasBypass = player.hasPermission("axsellwands.admin");
 
@@ -131,8 +136,9 @@ public class SellwandUseListener implements Listener {
 
             HookManager.getCurrency().giveBalance(player, newSoldPrice);
 
-            if (CONFIG.getBoolean("hologram.enabled", true))
+            if (CONFIG.getBoolean("hologram.enabled", true)) {
                 HologramUtils.spawnHologram(player, block.getLocation().add(0.5, 0.5, 0.5), replacements);
+            }
 
             MESSAGEUTILS.sendLang(player, "sell.chat", replacements);
 
@@ -140,9 +146,12 @@ public class SellwandUseListener implements Listener {
                 ActionBar.create(StringUtils.format(LANG.getString("sell.actionbar"), replacements)).send(player);
             }
 
-            if (LANG.getSection("sell.title") != null && !LANG.getString("sell.title.title").isBlank())
-                Title.create(StringUtils.format(LANG.getString("sell.title.title"), replacements),
-                        StringUtils.format(LANG.getString("sell.title.subtitle"), replacements), 10, 40, 10).send(player);
+            if (LANG.getSection("sell.title") != null && !LANG.getString("sell.title.title").isBlank()) {
+                Title.create(
+                        StringUtils.format(LANG.getString("sell.title.title"), replacements),
+                        StringUtils.format(LANG.getString("sell.title.subtitle"), replacements), 10, 40, 10
+                ).send(player);
+            }
 
 
             if (!LANG.getString("sounds.sell").isEmpty()) {
@@ -170,7 +179,7 @@ public class SellwandUseListener implements Listener {
             replacements.put("%sold-price%", NumberUtils.formatNumber(soldPrice + newSoldPrice));
 
             Sellwand wand = Sellwands.getSellwands().get(type);
-            ItemBuilder builder = new ItemBuilder(wand.getItemSection(), replacements);
+            ItemBuilder builder = ItemBuilder.create(wand.getItemSection(), replacements);
 
             event.getItem().setItemMeta(builder.get().getItemMeta());
 

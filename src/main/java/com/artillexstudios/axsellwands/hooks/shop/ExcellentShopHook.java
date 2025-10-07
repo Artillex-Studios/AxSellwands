@@ -24,6 +24,6 @@ public class ExcellentShopHook implements PricesHook {
     public double getPrice(Player player, ItemStack it) {
         VirtualProduct product = ShopAPI.getVirtualShop().getBestProductFor(it, TradeType.SELL);
         if (product == null || !product.isSellable()) return 0;
-        return product.getPrice(TradeType.SELL, player) / product.getUnitAmount() * it.getAmount();
+        return product.getFinalSellPrice(player) / product.getUnitAmount() * it.getAmount();
     }
 }

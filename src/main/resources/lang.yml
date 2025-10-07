@@ -2,9 +2,9 @@
 
 help:
   - " "
-  - "<gradient:#FF5500:#FF7700><bold>AxSellwands</gradient> &7»"
-  - " &7- &f/axsellwands reload &7| &#FF5500Reload plugin"
-  - " &7- &f/axsellwands give <player> <sellwand> [amount] &7| &#FF5500Give sellwands"
+  - "<gradient:#FF5500:#FF7700><b>AxSellwands</b></gradient> <#FFAA00>Help"
+  - " <#FFAA00>➤ <white>/axsellwands reload <#DDDDDD>| <#FFCC00>Reload plugin"
+  - " <#FFAA00>➤ <white>/axsellwands give <player> <sellwand> [amount] <#DDDDDD>| <#FFCC00>Give sellwands"
   - " "
 
 unlimited: "∞"

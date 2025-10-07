@@ -28,6 +28,15 @@ hologram:
   # how long should the hologram stay
   # 20 ticks = 1 second
   stay-time-ticks: 60
+  # set to 00000000 to make it invisible
+  # format (hexadecimal): AARRGGBB
+  background-color: 00000000
+  # list: left, right, center
+  alignment: center
+  # list: fixed, vertical, horizontal, center
+  billboard: vertical
+  # should blocks/entities be visible behind the displays?
+  see-through: false
 
 # under which durability should sellwands break?
 # 0 used to be the default in vanilla minecraft until 1.13
@@ -41,4 +50,4 @@ update-notifier:
   on-join: true
 
 # do not change this
-version: 4
+version: 5

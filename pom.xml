@@ -3,7 +3,7 @@
 
     <groupId>com.artillexstudios</groupId>
     <artifactId>AxSellwands</artifactId>
-    <version>1.10.3</version>
+    <version>1.11.0</version>
     <packaging>jar</packaging>
 
     <name>AxSellwands</name>
@@ -133,7 +133,7 @@
         </repository>
         <repository>
             <id>nightexpress-releases</id>
-            <url>https://repo.nightexpressdev.com/releases</url>
+            <url>https://repo.nightexpressdev.com/releases/</url>
         </repository>
     </repositories>
 
@@ -153,20 +153,20 @@
         <dependency>
             <groupId>org.spigotmc</groupId>
             <artifactId>spigot-api</artifactId>
-            <version>1.20.1-R0.1-SNAPSHOT</version>
+            <version>1.20.2-R0.1-SNAPSHOT</version>
             <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>com.artillexstudios.axapi</groupId>
             <artifactId>axapi</artifactId>
-            <version>1.4.732</version>
+            <version>1.4.802</version>
             <scope>compile</scope>
             <classifier>all</classifier>
         </dependency>
         <dependency>
             <groupId>org.bstats</groupId>
             <artifactId>bstats-bukkit</artifactId>
-            <version>3.0.2</version>
+            <version>3.1.0</version>
             <scope>compile</scope>
         </dependency>
         <dependency>
@@ -350,11 +350,10 @@
             <scope>provided</scope>
         </dependency>
         <dependency>
-            <groupId>su.nightexpress.nexshop</groupId>
-            <artifactId>ExcellentShop</artifactId>
-            <version>4.13.4</version>
-            <systemPath>${project.basedir}/libs/ExcellentShop-4.14.0.jar</systemPath>
-            <scope>system</scope>
+            <groupId>su.nightexpress.excellentshop</groupId>
+            <artifactId>Core</artifactId>
+            <version>4.20.0</version>
+            <scope>provided</scope>
         </dependency>
         <dependency>
             <groupId>me.crafter.mc.lockettepro</groupId>

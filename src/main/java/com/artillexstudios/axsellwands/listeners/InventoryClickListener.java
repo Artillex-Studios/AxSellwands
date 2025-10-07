@@ -22,7 +22,7 @@ import static com.artillexstudios.axsellwands.AxSellwands.LANG;
 import static com.artillexstudios.axsellwands.AxSellwands.MESSAGEUTILS;
 
 public class InventoryClickListener implements Listener {
-    private final Cooldown<Player> cooldown = new Cooldown<>();
+    private final Cooldown<Player> cooldown = Cooldown.create();
 
     @EventHandler(ignoreCancelled = true)
     public void onClick(@NotNull InventoryClickEvent event) {
@@ -90,7 +90,7 @@ public class InventoryClickListener implements Listener {
         replacements.put("%sold-price%", NumberUtils.formatNumber(newSoldPrice));
 
         Sellwand wand = Sellwands.getSellwands().get(type1);
-        ItemBuilder builder = new ItemBuilder(wand.getItemSection(), replacements);
+        ItemBuilder builder = ItemBuilder.create(wand.getItemSection(), replacements);
 
         event.getCurrentItem().setItemMeta(builder.get().getItemMeta());
 
