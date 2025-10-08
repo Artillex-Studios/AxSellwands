@@ -1,6 +1,6 @@
 package com.artillexstudios.axsellwands.hooks.shop;
 
-import com.artillexstudios.axgens.hooks.HookManager;
+import com.artillexstudios.axgens.api.AxGensAPI;
 import org.bukkit.entity.Player;
 import org.bukkit.inventory.ItemStack;
 
@@ -12,13 +12,11 @@ public class AxGensHook implements PricesHook {
 
     @Override
     public double getPrice(ItemStack it) {
-        if (HookManager.getShopPrices() == null) return -1.0D;
-        return HookManager.getShopPrices().getPrice(it);
+        return AxGensAPI.getPrice(it);
     }
 
     @Override
     public double getPrice(Player player, ItemStack it) {
-        if (HookManager.getShopPrices() == null) return -1.0D;
-        return HookManager.getShopPrices().getPrice(player, it);
+        return AxGensAPI.getPrice(player, it);
     }
 }
