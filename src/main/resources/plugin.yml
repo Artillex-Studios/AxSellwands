@@ -1,4 +1,4 @@
-name: AxSellwands
+name: '${project.name}'
 version: '${project.version}'
 main: com.artillexstudios.axsellwands.AxSellwands
 api-version: '1.20'

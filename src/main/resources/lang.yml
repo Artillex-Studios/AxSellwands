@@ -21,6 +21,8 @@ nothing-sold: "&#FFAA55Nothing in the container is sellable!"
 cooldown: "&#FFAA55You must wait another &f%time% seconds &#FFAA55before using this sellwand again!"
 
 no-permission: "&#FFAA55You don't have a permission to use a sellwand on this container!"
+no-world: "&#FFAA55You don't have a permission to use a sellwand on this world!"
+no-gamemode: "&#FFAA55You don't have a permission to use a sellwand on this gamemode!"
 
 disallowed-container: "&#FFAA55This sellwand can't be used on this type of container!"
 

@@ -22,10 +22,13 @@ import static com.artillexstudios.axsellwands.AxSellwands.MESSAGEUTILS;
 public enum Give {
     INSTANCE;
 
-    public void execute(CommandSender sender, Player player, @NotNull Sellwand sellwand, @Nullable Integer amount) {
+    public void execute(CommandSender sender, Player player, @NotNull Sellwand sellwand, @Nullable Integer amount, Integer usage) {
         float multiplier = sellwand.getMultiplier();
         int uses = sellwand.getUses();
-
+        if(usage != null){
+            if(usage==0) usage = -1;
+            uses = usage;
+        }
         Map<String, String> replacements = new HashMap<>();
         replacements.put("%multiplier%", "" + multiplier);
         replacements.put("%uses%", "" + (uses == -1 ? LANG.getString("unlimited", "∞") : uses));

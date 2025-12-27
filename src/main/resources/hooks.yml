@@ -23,6 +23,12 @@ hook-settings:
   CoinsEngine:
     currency-name: "coins"
   # protection
+  GriefDefender:
+    register: true
+  BlockLocker:
+    register: true
+  FabledSkyBlock:
+    register: true
   BentoBox:
     register: true
   GriefPrevention:

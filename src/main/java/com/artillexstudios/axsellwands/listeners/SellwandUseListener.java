@@ -21,6 +21,7 @@ import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
@@ -38,6 +39,17 @@ import static com.artillexstudios.axsellwands.AxSellwands.MESSAGEUTILS;
 
 public class SellwandUseListener implements Listener {
 
+    @EventHandler(priority = EventPriority.LOWEST)
+    public void onInteractChest(@NotNull PlayerInteractEvent event) { // Fix Open Copper Chest not support protect
+        Block block = event.getClickedBlock();
+        if (block == null) return;
+        Player player = event.getPlayer();
+        if( block.getType().name().toUpperCase().contains("_CHEST") && !HookManager.canBuildAt(player, block.getLocation()) ){
+            event.setCancelled(true);
+            player.playSound(player.getLocation(),Sound.ENTITY_VILLAGER_NO,1,1);
+            player.closeInventory();
+        }
+    }
     @EventHandler(ignoreCancelled = true)
     public void onInteract(@NotNull PlayerInteractEvent event) {
         if (event.getItem() == null) return;
@@ -50,7 +62,6 @@ public class SellwandUseListener implements Listener {
         event.setCancelled(true);
         if (sellwand == null) return;
         Player player = event.getPlayer();
-
         ItemStack[] contents;
         ContainerHook containerHook = HookManager.getContainerAt(player, block);
         if (containerHook != null) {
@@ -63,11 +74,27 @@ public class SellwandUseListener implements Listener {
             return; // not a container
         }
 
-        boolean hasBypass = player.hasPermission("axsellwands.admin");
+        if(sellwand.getBlocklist_gamemode().contains(player.getGameMode().name().toUpperCase())){
+            MESSAGEUTILS.sendLang(player, "no-gamemode");
+            return;
+        }
 
+        if(sellwand.getBlocklist_world().contains(player.getWorld().getName().toUpperCase())) {
+            MESSAGEUTILS.sendLang(player, "no-world");
+            return;
+        }
+        boolean hasBypass = player.hasPermission("axsellwands.admin");
         if (!hasBypass && !HookManager.canBuildAt(player, block.getLocation())) {
             MESSAGEUTILS.sendLang(player, "no-permission");
             return;
+        }
+
+        if(sellwand.getBlocklist_gamemode().contains(player.getGameMode().name().toUpperCase())) {
+            if (!hasBypass && !HookManager.canBuildAt(player, block.getLocation())) {
+                MESSAGEUTILS.sendLang(player, "no-permission");
+                return;
+
+            }
         }
 
         if (sellwand.getDisallowed().contains(block.getType()) || (!sellwand.getAllowed().isEmpty() && !sellwand.getAllowed().contains(block.getType()))) {

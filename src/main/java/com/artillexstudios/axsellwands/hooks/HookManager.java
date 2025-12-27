@@ -9,20 +9,7 @@ import com.artillexstudios.axsellwands.hooks.currency.PlayerPointsHook;
 import com.artillexstudios.axsellwands.hooks.currency.RoyaleEconomyHook;
 import com.artillexstudios.axsellwands.hooks.currency.VaultHook;
 import com.artillexstudios.axsellwands.hooks.other.Placeholders;
-import com.artillexstudios.axsellwands.hooks.protection.BentoBoxHook;
-import com.artillexstudios.axsellwands.hooks.protection.GriefPreventionHook;
-import com.artillexstudios.axsellwands.hooks.protection.HuskClaimsHook;
-import com.artillexstudios.axsellwands.hooks.protection.HuskTownsHook;
-import com.artillexstudios.axsellwands.hooks.protection.IridiumSkyBlockHook;
-import com.artillexstudios.axsellwands.hooks.protection.KingdomsXHook;
-import com.artillexstudios.axsellwands.hooks.protection.LandsHook;
-import com.artillexstudios.axsellwands.hooks.protection.PlotSquaredHook;
-import com.artillexstudios.axsellwands.hooks.protection.ProtectionHook;
-import com.artillexstudios.axsellwands.hooks.protection.ResidenceHook;
-import com.artillexstudios.axsellwands.hooks.protection.SaberFactionsHook;
-import com.artillexstudios.axsellwands.hooks.protection.SuperiorSkyBlock2Hook;
-import com.artillexstudios.axsellwands.hooks.protection.TownyHook;
-import com.artillexstudios.axsellwands.hooks.protection.WorldGuardHook;
+import com.artillexstudios.axsellwands.hooks.protection.*;
 import com.artillexstudios.axsellwands.hooks.shop.AxGensHook;
 import com.artillexstudios.axsellwands.hooks.shop.BuiltinPrices;
 import com.artillexstudios.axsellwands.hooks.shop.CMIPricesHook;
@@ -55,6 +42,20 @@ public class HookManager {
 
         if (HOOKS.getBoolean("hook-settings.PlaceholderAPI.register", true) && Bukkit.getPluginManager().getPlugin("PlaceholderAPI") != null) {
             new Placeholders().register();
+        }
+
+        if (HOOKS.getBoolean("hook-settings.FabledSkyBlock.register", true) && Bukkit.getPluginManager().getPlugin("FabledSkyBlock") != null) {
+            PROTECTION_HOOKS.add(new FabledSkyBlockHook());
+            Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into FabledSkyBlock!"));
+        }
+        if (HOOKS.getBoolean("hook-settings.GriefDefender.register", true) && Bukkit.getPluginManager().getPlugin("GriefDefender") != null) {
+            PROTECTION_HOOKS.add(new GriefDefenderHook());
+            Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into GriefDefender!"));
+        }
+
+        if (HOOKS.getBoolean("hook-settings.BlockLocker.register", true) && Bukkit.getPluginManager().getPlugin("BlockLocker") != null) {
+            PROTECTION_HOOKS.add(new BlockLockerHook());
+            Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into BlockLocker!"));
         }
 
         if (HOOKS.getBoolean("hook-settings.IridiumSkyBlock.register", true) && Bukkit.getPluginManager().getPlugin("IridiumSkyBlock") != null) {

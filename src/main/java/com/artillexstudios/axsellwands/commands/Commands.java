@@ -24,8 +24,8 @@ public class Commands {
     }
 
     @Subcommand("give")
-    public void give(@NotNull CommandSender sender, Player player, @NotNull Sellwand sellwand, @Optional @Range(min = 1, max = 64) Integer amount) {
-        Give.INSTANCE.execute(sender, player, sellwand, amount);
+    public void give(@NotNull CommandSender sender, Player player, @NotNull Sellwand sellwand, @Optional @Range(min = 1, max = 64) Integer amount, @Optional @Range(min = 0, max = 999999) Integer usage) {
+        Give.INSTANCE.execute(sender, player, sellwand, amount,usage);
     }
 
     @Subcommand("reload")

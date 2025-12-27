@@ -51,3 +51,5 @@ update-notifier:
 
 # do not change this
 version: 5
+
+metrics: true

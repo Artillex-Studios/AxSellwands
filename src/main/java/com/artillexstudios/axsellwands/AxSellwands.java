@@ -32,7 +32,7 @@ public final class AxSellwands extends AxPlugin {
     public static Config HOOKS;
     public static MessageUtils MESSAGEUTILS;
     private static AxPlugin instance;
-//    private static ThreadedQueue<Runnable> threadedQueue;
+//  private static ThreadedQueue<Runnable> threadedQueue;
     private static AxMetrics metrics;
 
 //    public static ThreadedQueue<Runnable> getThreadedQueue() {
@@ -70,11 +70,12 @@ public final class AxSellwands extends AxPlugin {
         getServer().getPluginManager().registerEvents(new InventoryClickListener(), this);
 
         Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500[AxSellwands] Loaded plugin!"));
+        if (CONFIG.getBoolean("metrics", false)) {
+            metrics = new AxMetrics(this, 15);
+            metrics.start();
+        }
 
-        metrics = new AxMetrics(this, 15);
-        metrics.start();
-
-        if (CONFIG.getBoolean("update-notifier.enabled", true)) new UpdateNotifier(this, 5725);
+        if (CONFIG.getBoolean("update-notifier.enabled", false)) new UpdateNotifier(this, 5725);
     }
 
     public void disable() {

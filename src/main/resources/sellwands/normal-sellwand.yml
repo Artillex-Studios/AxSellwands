@@ -28,4 +28,14 @@ uses: 100
 
 # how often should the player be able to sell
 # set to 0 to disable
-cooldown-milliseconds: 0
+cooldown-milliseconds: 2000
+
+blocklist:
+  #blocklist worlds
+  world:
+    - SPAWN
+    - HUB
+  #blocklist gamemodes
+  gamemode:
+    - CREATIVE
+    - SPECTATOR
