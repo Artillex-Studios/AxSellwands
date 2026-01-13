@@ -135,6 +135,10 @@
             <id>nightexpress-releases</id>
             <url>https://repo.nightexpressdev.com/releases/</url>
         </repository>
+        <repository>
+            <id>jitpack.io</id>
+            <url>https://jitpack.io</url>
+        </repository>
     </repositories>
 
     <dependencies>
@@ -357,6 +361,12 @@
             <groupId>com.github.SaberLLC</groupId>
             <artifactId>Saber-Factions</artifactId>
             <version>4.1.4-STABLE</version>
+            <scope>provided</scope>
+        </dependency>
+        <dependency>
+            <groupId>com.github.SergiJuan</groupId>
+            <artifactId>RealmCoreAPI</artifactId>
+            <version>main-7aece1d203-1</version>
             <scope>provided</scope>
         </dependency>
     </dependencies>

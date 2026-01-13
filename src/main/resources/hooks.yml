@@ -47,6 +47,8 @@ hook-settings:
     register: true
   WorldGuard:
     register: true
+  RealmCore:
+    register: true
   # other
   PlaceholderAPI:
     register: true

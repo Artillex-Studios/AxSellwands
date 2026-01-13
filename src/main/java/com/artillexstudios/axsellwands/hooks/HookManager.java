@@ -23,6 +23,7 @@ import com.artillexstudios.axsellwands.hooks.protection.SaberFactionsHook;
 import com.artillexstudios.axsellwands.hooks.protection.SuperiorSkyBlock2Hook;
 import com.artillexstudios.axsellwands.hooks.protection.TownyHook;
 import com.artillexstudios.axsellwands.hooks.protection.WorldGuardHook;
+import com.artillexstudios.axsellwands.hooks.protection.RealmCoreHook;
 import com.artillexstudios.axsellwands.hooks.shop.AxGensHook;
 import com.artillexstudios.axsellwands.hooks.shop.BuiltinPrices;
 import com.artillexstudios.axsellwands.hooks.shop.CMIPricesHook;
@@ -121,6 +122,11 @@ public class HookManager {
             PROTECTION_HOOKS.add(new SaberFactionsHook());
             Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into SaberFactions!"));
         }
+
+        if (HOOKS.getBoolean("hook-settings.RealmCore.register", true) && Bukkit.getPluginManager().getPlugin("RealmCore") != null) {
+            PROTECTION_HOOKS.add(new RealmCoreHook());
+            Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into RealmCore!"));
+}
     }
 
     public static void updateHooks() {
