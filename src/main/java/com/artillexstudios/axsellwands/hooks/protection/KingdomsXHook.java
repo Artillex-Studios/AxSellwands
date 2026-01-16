@@ -14,6 +14,9 @@ public class KingdomsXHook implements ProtectionHook {
 
         if (land == null) return true;
 
-        return land.getKingdom().isMember(localPlayer);
+        Kingdom kingdom = land.getKingdom();
+        if (kingdom == null) return true;
+
+        return kingdom.isMember(localPlayer);
     }
 }
