@@ -5,6 +5,7 @@ import com.artillexstudios.axapi.utils.StringUtils;
 import com.artillexstudios.axsellwands.hooks.container.ContainerHook;
 import com.artillexstudios.axsellwands.hooks.currency.CoinsEngineHook;
 import com.artillexstudios.axsellwands.hooks.currency.CurrencyHook;
+import com.artillexstudios.axsellwands.hooks.currency.ExcellentEconomyHook;
 import com.artillexstudios.axsellwands.hooks.currency.PlayerPointsHook;
 import com.artillexstudios.axsellwands.hooks.currency.RoyaleEconomyHook;
 import com.artillexstudios.axsellwands.hooks.currency.VaultHook;
@@ -152,6 +153,16 @@ public class HookManager {
                     Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into CoinsEngine!"));
                 } else {
                     Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] CoinsEngine is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
+                }
+                break;
+            }
+
+            case "EXCELLENTECONOMY": {
+                if (Bukkit.getPluginManager().getPlugin("CoinsEngine") != null || Bukkit.getPluginManager().getPlugin("ExcellentEconomy") != null) {
+                    currency = new ExcellentEconomyHook();
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#33FF33[AxSellwands] Hooked into ExcellentEconomy!"));
+                } else {
+                    Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF3333[AxSellwands] ExcellentEconomy is set in hooks.yml, but it is not installed, please download it or change it to stop errors!"));
                 }
                 break;
             }
