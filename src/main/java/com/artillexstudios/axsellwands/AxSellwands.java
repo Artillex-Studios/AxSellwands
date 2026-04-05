@@ -2,7 +2,6 @@ package com.artillexstudios.axsellwands;
 
 import com.artillexstudios.axapi.AxPlugin;
 import com.artillexstudios.axapi.config.Config;
-import com.artillexstudios.axapi.executor.ThreadedQueue;
 import com.artillexstudios.axapi.libs.boostedyaml.dvs.versioning.BasicVersioning;
 import com.artillexstudios.axapi.libs.boostedyaml.settings.dumper.DumperSettings;
 import com.artillexstudios.axapi.libs.boostedyaml.settings.general.GeneralSettings;
@@ -74,7 +73,8 @@ public final class AxSellwands extends AxPlugin {
         metrics = new AxMetrics(this, 15);
         metrics.start();
 
-        if (CONFIG.getBoolean("update-notifier.enabled", true)) new UpdateNotifier(this, 5725);
+        UpdateNotifier.init(CONFIG, LANG);
+        if (CONFIG.getBoolean("update-notifier.enabled", true)) new UpdateNotifier();
     }
 
     public void disable() {
