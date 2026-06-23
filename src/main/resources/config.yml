@@ -12,6 +12,9 @@ stacking-mode: 1
 # if true: when merging two sell wands, their usage limit can go over the limit
 allow-going-over-limit: false
 
+# if true: will sell contents of shulker box when selling one
+sell-shulker-contents: true
+
 number-formatting:
   # modes:
   # 0 - formatted (customizable, look at the formatted part)

@@ -19,12 +19,14 @@ import org.bukkit.Particle;
 import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
+import org.bukkit.block.ShulkerBox;
 import org.bukkit.entity.Player;
 import org.bukkit.event.EventHandler;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
+import org.bukkit.inventory.meta.BlockStateMeta;
 import org.jetbrains.annotations.NotNull;
 
 import java.util.Collections;
@@ -88,6 +90,8 @@ public class SellwandUseListener implements Listener {
         int soldAmount = wrapper.getIntOr("axsellwands-sold-amount", 0);
         double soldPrice = wrapper.getDoubleOr("axsellwands-sold-price", 0);
 
+        boolean sellShulkerContents = CONFIG.getBoolean("sell-shulker-contents", false);
+
         int newSoldAmount = 0;
         double newSoldPrice = 0;
 
@@ -95,6 +99,37 @@ public class SellwandUseListener implements Listener {
             Map<Material, Integer> items = new HashMap<>();
             for (ItemStack it : contents) {
                 if (it == null) continue;
+
+                if (sellShulkerContents && isShulkerBox(it.getType())
+                        && it.getItemMeta() instanceof BlockStateMeta bsm
+                        && bsm.getBlockState() instanceof ShulkerBox shulker) {
+
+                    ItemStack[] shulkerContents = shulker.getInventory().getContents();
+                    boolean shulkerModified = false;
+
+                    for (ItemStack stack : shulkerContents) {
+                        if (stack == null) continue;
+                        double price = HookManager.getShopPrices().getPrice(player, stack);
+                        if (price <= 0) continue;
+                        price *= multiplier;
+
+                        newSoldPrice += price;
+                        newSoldAmount += stack.getAmount();
+
+                        items.merge(stack.getType(), stack.getAmount(), Integer::sum);
+
+                        stack.setAmount(0);
+                        shulkerModified = true;
+                    }
+
+                    if (shulkerModified) {
+                        shulker.getInventory().setContents(shulkerContents);
+                        bsm.setBlockState(shulker);
+                        it.setItemMeta(bsm);
+                    }
+                    continue; // skip the normal item path so the box itself isn't sold/removed
+                }
+
                 double price = HookManager.getShopPrices().getPrice(player, it);
                 if (price <= 0) continue;
                 price *= multiplier;
@@ -198,6 +233,25 @@ public class SellwandUseListener implements Listener {
         } else {
             for (ItemStack it : contents) {
                 if (it == null) continue;
+                if (sellShulkerContents && isShulkerBox(it.getType())
+                        && it.getItemMeta() instanceof BlockStateMeta bsm
+                        && bsm.getBlockState() instanceof ShulkerBox shulker) {
+
+                    ItemStack[] shulkerContents = shulker.getInventory().getContents();
+
+                    for (ItemStack stack : shulkerContents) {
+                        if (stack == null) continue;
+                        double price = HookManager.getShopPrices().getPrice(player, stack);
+                        if (price <= 0) continue;
+                        price *= multiplier;
+
+                        newSoldPrice += price;
+                        newSoldAmount += stack.getAmount();
+                    }
+
+                    continue; // skip the normal item path so the box itself isn't sold/removed
+                }
+
                 double price = HookManager.getShopPrices().getPrice(player, it);
                 if (price == -1.0D) continue;
                 price *= multiplier;
@@ -233,5 +287,9 @@ public class SellwandUseListener implements Listener {
                 player.spawnParticle(Particle.valueOf(LANG.getString("particles.inspect")), block.getLocation().add(0.5, 0.5, 0.5), 30, 0.5, 0.5, 0.5);
             }
         }
+    }
+
+    private boolean isShulkerBox(Material material) {
+        return material.name().endsWith("SHULKER_BOX");
     }
 }
