@@ -5,30 +5,4 @@ api-version: '1.20'
 folia-supported: true
 
 softdepend:
-  - AxGens
-  - Vault
-  - PlayerPoints
-  - Kingdoms
-  - Essentials
-  - ShopGUIPlus
-  - EconomyShopGUI
-  - EconomyShopGUI-Premium
-  - CMI
-  - CoinsEngine
-  - ExcellentEconomy
   - PlaceholderAPI
-  - PlotSquared
-  - Residence
-  - Lands
-  - GriefPrevention
-  - BentoBox
-  - Kingdoms
-  - WorldGuard
-  - SuperiorSkyblock2
-  - IridiumSkyBlock
-  - HuskTowns
-  - Towny
-  - DynamicShop
-  - ExcellentShop
-  - HuskClaims
-  - Factions

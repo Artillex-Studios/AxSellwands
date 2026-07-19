@@ -55,7 +55,7 @@ public final class AxSellwands extends AxPlugin {
 
 //        threadedQueue = new ThreadedQueue<>("AxSellwands-Datastore-thread");
 
-        HookManager.setupHooks();
+        HookManager.setup();
         NumberUtils.reload();
         CommandManager.load();
 

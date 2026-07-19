@@ -1,57 +1,17 @@
 # DOCUMENTATION: https://docs.artillex-studios.com/axsellwands.html
 
-# what plugin to use for these things?
-# if you need another plugin supported, please contact us on discord
-# Note: custom should only be used if you have a plugin that uses the API to add a custom hook
+# what plugins should be used?
 hooks:
-  # values: Vault, PlayerPoints, CoinsEngine, RoyaleEconomy, custom
+  # list of supported plugins: https://docs.artillex-studios.com/integrations.html#currency
+  # if you pick a plugin that supports multiple currencies, make sure to select the currency under the hook-settings below!
   economy-plugin: "Vault"
-  # values:
-  # - builtin
-  # - AxGens
-  # - ShopGUIPlus
-  # - Essentials
-  # - EconomyShopGUI
-  # - DynamicShop
-  # - ExcellentShop
-  # - CMI
-  # - custom
+  # list of supported plugins: https://docs.artillex-studios.com/integrations.html#shop
+  # you can set it to "builtin" for the plugin to use the prices.yml
   price-plugin: "builtin"
+  # https://docs.artillex-studios.com/integrations.html#protection
+  protection-plugins:
 
 hook-settings:
-  # economy
-  CoinsEngine:
-    currency-name: "coins"
-  ExcellentEconomy:
-    currency-name: "coins"
-  # protection
-  BentoBox:
-    register: true
-  GriefPrevention:
-    register: true
-  HuskTowns:
-    register: true
-  IridiumSkyBlock:
-    register: true
-  Kingdoms:
-    register: true
-  Lands:
-    register: true
-  PlotSquared:
-    register: true
-  Residence:
-    register: true
-  SaberFactions:
-    register: true
-  SuperiorSkyblock2:
-    register: true
-  Towny:
-    register: true
-  WorldGuard:
-    register: true
-  # other
-  PlaceholderAPI:
-    register: true
 
 # do not change this
-version: 3
+version: 4

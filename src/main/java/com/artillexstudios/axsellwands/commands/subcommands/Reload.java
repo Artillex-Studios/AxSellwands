@@ -39,7 +39,7 @@ public enum Reload {
         com.artillexstudios.axsellwands.sellwands.Sellwands.reload();
         Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500╠ &#FFEEAALoaded &f" + com.artillexstudios.axsellwands.sellwands.Sellwands.getSellwands().size() + " &#FFEEAAsellwands!"));
 
-        HookManager.updateHooks();
+        HookManager.reload();
         NumberUtils.reload();
 
         Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500╚ &#FFEEAASuccessful reload!"));

@@ -1,33 +1,36 @@
 package com.artillexstudios.axsellwands.utils;
 
-import com.artillexstudios.axsellwands.AxSellwands;
-import org.jetbrains.annotations.NotNull;
+import com.artillexstudios.axapi.utils.file.FileUtils;
 
-import java.io.File;
-import java.io.FileWriter;
 import java.io.IOException;
-import java.io.PrintWriter;
+import java.nio.file.Files;
+import java.nio.file.Path;
+import java.nio.file.StandardOpenOption;
 import java.time.ZonedDateTime;
+import java.time.format.DateTimeFormatter;
 
 public class HistoryUtils {
+    private static final DateTimeFormatter FILE_FORMAT = DateTimeFormatter.ofPattern("yyyy-MM-dd");
+    private static final DateTimeFormatter TIME_FORMAT = DateTimeFormatter.ofPattern("HH:mm:ss");
+    private static final Path logsDir;
 
-    public static void writeToHistory(@NotNull String txt) {
-        final ZonedDateTime zdt = ZonedDateTime.now();
-        final File subdir = new File(AxSellwands.getInstance().getDataFolder().getPath() + System.getProperty("file.separator") + "logs");
-        subdir.mkdirs();
-        final File file = new File(subdir.getPath() + "/" + zdt.getYear() + "-" + twoDigit(zdt.getMonthValue()) + "-" + twoDigit(zdt.getDayOfMonth()) + ".log");
-
-        try (FileWriter fr = new FileWriter(file.getAbsoluteFile(), true)) {
-            try (PrintWriter pr = new PrintWriter(fr)) {
-                pr.print("[" + twoDigit(zdt.getHour()) + ":" + twoDigit(zdt.getMinute()) + ":" + twoDigit(zdt.getSecond()) + "] ");
-                pr.println(txt);
-            }
+    static {
+        logsDir = FileUtils.getInstance().getFolder().toPath().resolve("logs");
+        try {
+            Files.createDirectories(logsDir);
         } catch (IOException ex) {
             ex.printStackTrace();
         }
     }
 
-    private static @NotNull String twoDigit(int i) {
-        return i > 9 ? Integer.toString(i) : "0" + i;
+    public static void writeToHistory(String text) {
+        ZonedDateTime now = ZonedDateTime.now();
+        Path logFile = logsDir.resolve("%s.log".formatted(now.format(FILE_FORMAT)));
+        String line = "[%s] %s%s".formatted(now.format(TIME_FORMAT), text, System.lineSeparator());
+        try {
+            Files.writeString(logFile, line, StandardOpenOption.CREATE, StandardOpenOption.APPEND);
+        } catch (IOException ex) {
+            ex.printStackTrace();
+        }
     }
 }

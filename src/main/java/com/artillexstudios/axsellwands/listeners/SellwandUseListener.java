@@ -5,9 +5,10 @@ import com.artillexstudios.axapi.utils.ActionBar;
 import com.artillexstudios.axapi.utils.ItemBuilder;
 import com.artillexstudios.axapi.utils.StringUtils;
 import com.artillexstudios.axapi.utils.Title;
+import com.artillexstudios.axintegrations.types.CurrencyIntegration;
+import com.artillexstudios.axintegrations.types.ProtectionIntegration;
+import com.artillexstudios.axintegrations.types.ShopIntegration;
 import com.artillexstudios.axsellwands.api.events.AxSellwandsSellEvent;
-import com.artillexstudios.axsellwands.hooks.HookManager;
-import com.artillexstudios.axsellwands.hooks.container.ContainerHook;
 import com.artillexstudios.axsellwands.sellwands.Sellwand;
 import com.artillexstudios.axsellwands.sellwands.Sellwands;
 import com.artillexstudios.axsellwands.utils.HistoryUtils;
@@ -52,10 +53,7 @@ public class SellwandUseListener implements Listener {
         Player player = event.getPlayer();
 
         ItemStack[] contents;
-        ContainerHook containerHook = HookManager.getContainerAt(player, block);
-        if (containerHook != null) {
-            contents = containerHook.getItems(player, block).toArray(new ItemStack[0]);
-        } else if (block.getState() instanceof Container) {
+        if (block.getState() instanceof Container) {
             contents = ((Container) block.getState()).getInventory().getContents();
         } else if (block.getType() == Material.ENDER_CHEST) {
             contents = player.getEnderChest().getContents();
@@ -65,7 +63,7 @@ public class SellwandUseListener implements Listener {
 
         boolean hasBypass = player.hasPermission("axsellwands.admin");
 
-        if (!hasBypass && !HookManager.canBuildAt(player, block.getLocation())) {
+        if (!hasBypass && (!ProtectionIntegration.hasPermission(player, block.getLocation(), ProtectionIntegration.Permission.BREAK) || !ProtectionIntegration.hasPermission(player, block.getLocation(), ProtectionIntegration.Permission.OPEN_CONTAINER))) {
             MESSAGEUTILS.sendLang(player, "no-permission");
             return;
         }
@@ -91,21 +89,28 @@ public class SellwandUseListener implements Listener {
         int newSoldAmount = 0;
         double newSoldPrice = 0;
 
+        ShopIntegration shopIntegration = ShopIntegration.one();
+        if (shopIntegration == null) {
+            Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF0000[AxSellwands] Failed to sell items, no shop plugin selected in the hooks.yml!"));
+            return;
+        }
+
         if (event.getAction() == Action.RIGHT_CLICK_BLOCK) {
             Map<Material, Integer> items = new HashMap<>();
             for (ItemStack it : contents) {
                 if (it == null) continue;
-                double price = HookManager.getShopPrices().getPrice(player, it);
-                if (price <= 0) continue;
+                Double price = shopIntegration.getSellPrice(player.getUniqueId(), it);
+                if (price == null || price <= 0) continue;
                 price *= multiplier;
 
                 newSoldPrice += price;
                 newSoldAmount += it.getAmount();
 
-                if (items.containsKey(it.getType()))
+                if (items.containsKey(it.getType())) {
                     items.put(it.getType(), items.get(it.getType()) + it.getAmount());
-                else
+                } else {
                     items.put(it.getType(), it.getAmount());
+                }
 
                 it.setAmount(0);
             }
@@ -134,7 +139,12 @@ public class SellwandUseListener implements Listener {
             replacements.put("%amount%", "" + newSoldAmount);
             replacements.put("%price%", NumberUtils.formatNumber(newSoldPrice));
 
-            HookManager.getCurrency().giveBalance(player, newSoldPrice);
+            CurrencyIntegration currencyIntegration = CurrencyIntegration.one();
+            if (currencyIntegration == null) {
+                Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF0000[AxSellwands] Failed to sell items, no economy plugin selected in the hooks.yml!"));
+                return;
+            }
+            currencyIntegration.giveBalance(player.getUniqueId(), newSoldPrice);
 
             if (CONFIG.getBoolean("hologram.enabled", true)) {
                 HologramUtils.spawnHologram(player, block.getLocation().add(0.5, 0.5, 0.5), replacements);
@@ -152,7 +162,6 @@ public class SellwandUseListener implements Listener {
                         StringUtils.format(LANG.getString("sell.title.subtitle"), replacements), 10, 40, 10
                 ).send(player);
             }
-
 
             if (!LANG.getString("sounds.sell").isEmpty()) {
                 player.playSound(player.getLocation(), Sound.valueOf(LANG.getString("sounds.sell")), 1f, 1f);
@@ -198,8 +207,8 @@ public class SellwandUseListener implements Listener {
         } else {
             for (ItemStack it : contents) {
                 if (it == null) continue;
-                double price = HookManager.getShopPrices().getPrice(player, it);
-                if (price == -1.0D) continue;
+                Double price = shopIntegration.getSellPrice(player.getUniqueId(), it);
+                if (price == null || price <= 0) continue;
                 price *= multiplier;
 
                 newSoldPrice += price;
@@ -221,9 +230,13 @@ public class SellwandUseListener implements Listener {
                 ActionBar.create(StringUtils.format(LANG.getString("inspect.actionbar"), replacements)).send(player);
             }
 
-            if (LANG.getSection("inspect.title") != null && !LANG.getString("inspect.title.title").isBlank())
-                Title.create(StringUtils.format(LANG.getString("inspect.title.title"), replacements),
-                        StringUtils.format(LANG.getString("inspect.title.subtitle"), replacements), 10, 40, 10).send(player);
+            if (LANG.getSection("inspect.title") != null && !LANG.getString("inspect.title.title").isBlank()) {
+                Title.create(
+                        StringUtils.format(LANG.getString("inspect.title.title"), replacements),
+                        StringUtils.format(LANG.getString("inspect.title.subtitle"), replacements),
+                        10, 40, 10
+                ).send(player);
+            }
 
             if (!LANG.getString("sounds.inspect").isEmpty()) {
                 player.playSound(player.getLocation(), Sound.valueOf(LANG.getString("sounds.inspect")), 1f, 1f);

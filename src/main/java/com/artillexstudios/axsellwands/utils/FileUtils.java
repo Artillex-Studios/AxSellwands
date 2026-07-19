@@ -14,7 +14,7 @@ import java.util.zip.ZipEntry;
 import java.util.zip.ZipFile;
 
 public class FileUtils {
-    public static final Path PLUGIN_DIRECTORY = AxSellwands.getInstance().getDataFolder().toPath();
+    public static final Path PLUGIN_DIRECTORY = com.artillexstudios.axapi.utils.file.FileUtils.getInstance().getFolder().toPath();
 
     public static void copyFromResource(@NotNull String path) {
         try (ZipFile zip = new ZipFile(Paths.get(AxSellwands.getInstance().getClass().getProtectionDomain().getCodeSource().getLocation().toURI()).toFile())) {

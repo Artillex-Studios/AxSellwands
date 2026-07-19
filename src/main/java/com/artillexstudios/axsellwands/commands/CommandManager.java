@@ -24,7 +24,7 @@ public class CommandManager {
             List<String> suggestions = new ArrayList<>();
             Sellwands.getSellwands().forEach((id, sellwand) -> suggestions.add(id));
             if (!suggestions.isEmpty()) return suggestions;
-            sender.error("There are no sellwands configured! If this is your first install, contact support or copy files from out github resources!");
+            sender.error("There are no sellwands configured!");
             return suggestions;
         });
 
@@ -38,7 +38,7 @@ public class CommandManager {
     }
 
     public static void reload() {
-        handler.unregisterAllCommands();
+//        handler.unregisterAllCommands();
 
         handler.register(new Commands());
 
