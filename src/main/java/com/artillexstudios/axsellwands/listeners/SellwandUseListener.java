@@ -63,7 +63,7 @@ public class SellwandUseListener implements Listener {
 
         boolean hasBypass = player.hasPermission("axsellwands.admin");
 
-        if (!hasBypass && (!ProtectionIntegration.hasPermission(player, block.getLocation(), ProtectionIntegration.Permission.BREAK) || !ProtectionIntegration.hasPermission(player, block.getLocation(), ProtectionIntegration.Permission.OPEN_CONTAINER))) {
+        if (!hasBypass && !ProtectionIntegration.hasPermission(player, block.getLocation(), ProtectionIntegration.Permission.BREAK)) {
             MESSAGEUTILS.sendLang(player, "no-permission");
             return;
         }
