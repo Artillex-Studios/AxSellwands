@@ -82,7 +82,7 @@ public final class AxSellwands extends AxPlugin {
     }
 
     public void updateFlags() {
-        FeatureFlags.USE_LEGACY_HEX_FORMATTER.set(true);
+        FeatureFlags.USE_LEGACY_HEX_FORMATTER.set(false);
         FeatureFlags.PACKET_ENTITY_TRACKER_ENABLED.set(true);
         FeatureFlags.HOLOGRAM_UPDATE_TICKS.set(20L);
         FeatureFlags.PACKET_ENTITY_TRACKER_THREADS.set(1);
