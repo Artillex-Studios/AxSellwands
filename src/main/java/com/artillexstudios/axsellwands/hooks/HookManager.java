@@ -18,10 +18,11 @@ public class HookManager {
                     return HOOKS.getBoolean("hooks.protection-plugins.%s".formatted(name), true);
                 })
                 .enableShopIntegrations(name -> {
-                    return HOOKS.getString("hooks.price-plugin", "").equals(name);
+                    System.out.println(name);
+                    return HOOKS.getString("hooks.price-plugin", "").equalsIgnoreCase(name);
                 })
                 .enableCurrencyIntegrations(name -> {
-                    return HOOKS.getString("hooks.economy-plugin", "").equals(name);
+                    return HOOKS.getString("hooks.economy-plugin", "").equalsIgnoreCase(name);
                 }, name -> {
                     return Collections.singletonList(HOOKS.getString("hook-settings.%s.currency-name".formatted(name)));
                 })
