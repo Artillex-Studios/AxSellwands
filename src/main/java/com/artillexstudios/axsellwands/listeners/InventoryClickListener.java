@@ -3,6 +3,7 @@ package com.artillexstudios.axsellwands.listeners;
 import com.artillexstudios.axapi.items.NBTWrapper;
 import com.artillexstudios.axapi.utils.Cooldown;
 import com.artillexstudios.axapi.utils.ItemBuilder;
+import com.artillexstudios.axapi.utils.PaperUtils;
 import com.artillexstudios.axsellwands.sellwands.Sellwand;
 import com.artillexstudios.axsellwands.sellwands.Sellwands;
 import com.artillexstudios.axsellwands.utils.NumberUtils;
@@ -22,7 +23,7 @@ import static com.artillexstudios.axsellwands.AxSellwands.LANG;
 import static com.artillexstudios.axsellwands.AxSellwands.MESSAGEUTILS;
 
 public class InventoryClickListener implements Listener {
-    private final Cooldown<Player> cooldown = Cooldown.create();
+    private final Cooldown<Player> cooldown = PaperUtils.isFolia() ? Cooldown.createSynchronized() : Cooldown.create();
 
     @EventHandler(ignoreCancelled = true)
     public void onClick(@NotNull InventoryClickEvent event) {

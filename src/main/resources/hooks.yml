@@ -8,8 +8,12 @@ hooks:
   # list of supported plugins: https://docs.artillex-studios.com/integrations.html#shop
   # you can set it to "builtin" for the plugin to use the prices.yml
   price-plugin: "builtin"
+  # used to prevent selling items from other players' containers
   # https://docs.artillex-studios.com/integrations.html#protection
   protection-plugins:
+  # used to get items from a custom storage block
+  # https://docs.artillex-studios.com/integrations.html#container
+  container-plugins:
 
 hook-settings:
 

@@ -12,6 +12,16 @@ stacking-mode: 1
 # if true: when merging two sell wands, their usage limit can go over the limit
 allow-going-over-limit: false
 
+# what event priority should the plugin use? if everything is working, you don't have to touch this
+# however if some plugin is overriding your sell wands, you can try setting this to LOWEST
+# values: LOWEST, LOW, NORMAL, HIGH, HIGHEST, MONITOR
+# requires a restart to change
+interact-listener-priority: NORMAL
+
+# under which durability should sellwands break?
+# 0 used to be the default in vanilla minecraft until 1.13
+minimum-durability: 1
+
 number-formatting:
   # modes:
   # 0 - formatted (customizable, look at the formatted part)
@@ -40,10 +50,6 @@ hologram:
   # should text have an outline?
   shadow: true
 
-# under which durability should sellwands break?
-# 0 used to be the default in vanilla minecraft until 1.13
-minimum-durability: 1
-
 # should be plugin notify you if there is a new update?
 update-notifier:
   # if enabled, it will display the message in the console
@@ -52,4 +58,4 @@ update-notifier:
   on-join: true
 
 # do not change this
-version: 6
+version: 7

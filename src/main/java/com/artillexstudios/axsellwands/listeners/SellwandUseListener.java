@@ -5,9 +5,11 @@ import com.artillexstudios.axapi.utils.ActionBar;
 import com.artillexstudios.axapi.utils.ItemBuilder;
 import com.artillexstudios.axapi.utils.StringUtils;
 import com.artillexstudios.axapi.utils.Title;
+import com.artillexstudios.axintegrations.types.ContainerIntegration;
 import com.artillexstudios.axintegrations.types.CurrencyIntegration;
 import com.artillexstudios.axintegrations.types.ProtectionIntegration;
 import com.artillexstudios.axintegrations.types.ShopIntegration;
+import com.artillexstudios.axsellwands.AxSellwands;
 import com.artillexstudios.axsellwands.api.events.AxSellwandsSellEvent;
 import com.artillexstudios.axsellwands.sellwands.Sellwand;
 import com.artillexstudios.axsellwands.sellwands.Sellwands;
@@ -21,12 +23,12 @@ import org.bukkit.Sound;
 import org.bukkit.block.Block;
 import org.bukkit.block.Container;
 import org.bukkit.entity.Player;
-import org.bukkit.event.EventHandler;
+import org.bukkit.event.EventPriority;
 import org.bukkit.event.Listener;
 import org.bukkit.event.block.Action;
 import org.bukkit.event.player.PlayerInteractEvent;
 import org.bukkit.inventory.ItemStack;
-import org.jetbrains.annotations.NotNull;
+import org.bukkit.plugin.EventExecutor;
 
 import java.util.Collections;
 import java.util.HashMap;
@@ -39,8 +41,35 @@ import static com.artillexstudios.axsellwands.AxSellwands.MESSAGEUTILS;
 
 public class SellwandUseListener implements Listener {
 
-    @EventHandler(ignoreCancelled = true)
-    public void onInteract(@NotNull PlayerInteractEvent event) {
+    public static void registerEvent() {
+        SellwandUseListener useListener = new SellwandUseListener();
+        String priority = CONFIG.getString("interact-listener-priority", "LOW");
+
+        EventPriority eventPriority;
+        try {
+            eventPriority = EventPriority.valueOf(priority);
+        } catch (IllegalArgumentException ex) {
+            Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF0000[AxSellwands] Invalid event priority: &#FFAAAA%s".formatted(priority)));
+            eventPriority = EventPriority.LOW;
+        }
+
+        EventExecutor executor = (listener, event) -> {
+            if (listener instanceof SellwandUseListener && event instanceof PlayerInteractEvent useEvent) {
+                useListener.onInteract(useEvent);
+            }
+        };
+
+        AxSellwands.getInstance().getServer().getPluginManager().registerEvent(
+                PlayerInteractEvent.class,
+                useListener,
+                eventPriority,
+                executor,
+                AxSellwands.getInstance(),
+                false
+        );
+    }
+
+    public void onInteract(PlayerInteractEvent event) {
         if (event.getItem() == null) return;
         Block block = event.getClickedBlock();
         if (block == null) return;
@@ -53,16 +82,20 @@ public class SellwandUseListener implements Listener {
         Player player = event.getPlayer();
 
         ItemStack[] contents;
-        if (block.getState() instanceof Container) {
-            contents = ((Container) block.getState()).getInventory().getContents();
-        } else if (block.getType() == Material.ENDER_CHEST) {
-            contents = player.getEnderChest().getContents();
+        ContainerIntegration integration = ContainerIntegration.getContainerIntegration(block);
+        if (integration != null) {
+            contents = integration.getContents(block).toArray(new ItemStack[0]);
         } else {
-            return; // not a container
+            if (block.getState() instanceof Container) {
+                contents = ((Container) block.getState()).getInventory().getContents();
+            } else if (block.getType() == Material.ENDER_CHEST) {
+                contents = player.getEnderChest().getContents();
+            } else {
+                return; // not a container
+            }
         }
 
         boolean hasBypass = player.hasPermission("axsellwands.admin");
-
         if (!hasBypass && !ProtectionIntegration.hasPermission(player, block.getLocation(), ProtectionIntegration.Permission.BREAK)) {
             MESSAGEUTILS.sendLang(player, "no-permission");
             return;

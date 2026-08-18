@@ -4,6 +4,7 @@ import com.artillexstudios.axintegrations.IntegrationManager;
 import com.artillexstudios.axintegrations.IntegrationSetup;
 import com.artillexstudios.axintegrations.IntegrationType;
 import com.artillexstudios.axintegrations.api.AxIntegrationsAPI;
+import com.artillexstudios.axintegrations.types.BackpackIntegration;
 
 import java.util.Collections;
 import java.util.Map;
@@ -14,11 +15,13 @@ public class HookManager {
 
     public static void setup() {
         IntegrationSetup.builder()
+                .enableContainerIntegrations(name -> {
+                    return HOOKS.getBoolean("hooks.container-plugins.%s".formatted(name), true);
+                })
                 .enableProtectionIntegrations(name -> {
                     return HOOKS.getBoolean("hooks.protection-plugins.%s".formatted(name), true);
                 })
                 .enableShopIntegrations(name -> {
-                    System.out.println(name);
                     return HOOKS.getString("hooks.price-plugin", "").equalsIgnoreCase(name);
                 })
                 .enableCurrencyIntegrations(name -> {
@@ -32,6 +35,13 @@ public class HookManager {
                     boolean modified = false;
                     for (String name : IntegrationManager.listAvailableIntegrations(IntegrationType.PROTECTION).keySet()) {
                         String route = "hooks.protection-plugins.%s".formatted(name);
+                        if (HOOKS.getString(route) == null) {
+                            HOOKS.set(route, true);
+                            modified = true;
+                        }
+                    }
+                    for (String name : IntegrationManager.listAvailableIntegrations(IntegrationType.CONTAINER).keySet()) {
+                        String route = "hooks.container-plugins.%s".formatted(name);
                         if (HOOKS.getString(route) == null) {
                             HOOKS.set(route, true);
                             modified = true;
