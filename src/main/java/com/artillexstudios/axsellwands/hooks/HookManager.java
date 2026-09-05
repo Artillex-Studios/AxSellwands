@@ -4,7 +4,6 @@ import com.artillexstudios.axintegrations.IntegrationManager;
 import com.artillexstudios.axintegrations.IntegrationSetup;
 import com.artillexstudios.axintegrations.IntegrationType;
 import com.artillexstudios.axintegrations.api.AxIntegrationsAPI;
-import com.artillexstudios.axintegrations.types.BackpackIntegration;
 
 import java.util.Collections;
 import java.util.Map;
@@ -69,6 +68,6 @@ public class HookManager {
     }
 
     public static void reload() {
-        IntegrationManager.reload();
+        IntegrationManager.reload(); // todo: unload old (shop) hooks
     }
 }

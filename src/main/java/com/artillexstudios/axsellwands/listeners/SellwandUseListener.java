@@ -79,7 +79,13 @@ public class SellwandUseListener implements Listener {
         Sellwand sellwand = Sellwands.getSellwands().get(type);
         event.setCancelled(true);
         if (sellwand == null) return;
+
         Player player = event.getPlayer();
+        boolean hasBypass = player.hasPermission("axsellwands.admin");
+        if (!hasBypass && !ProtectionIntegration.hasPermission(player, block.getLocation(), ProtectionIntegration.Permission.BREAK)) {
+            MESSAGEUTILS.sendLang(player, "no-permission");
+            return;
+        }
 
         ItemStack[] contents;
         ContainerIntegration integration = ContainerIntegration.getContainerIntegration(block);
@@ -93,12 +99,6 @@ public class SellwandUseListener implements Listener {
             } else {
                 return; // not a container
             }
-        }
-
-        boolean hasBypass = player.hasPermission("axsellwands.admin");
-        if (!hasBypass && !ProtectionIntegration.hasPermission(player, block.getLocation(), ProtectionIntegration.Permission.BREAK)) {
-            MESSAGEUTILS.sendLang(player, "no-permission");
-            return;
         }
 
         if (sellwand.getDisallowed().contains(block.getType()) || (!sellwand.getAllowed().isEmpty() && !sellwand.getAllowed().contains(block.getType()))) {
