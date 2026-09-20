@@ -32,17 +32,26 @@ public final class AxSellwands extends AxPlugin {
     public static Config HOOKS;
     public static MessageUtils MESSAGEUTILS;
     private static AxPlugin instance;
-//    private static ThreadedQueue<Runnable> threadedQueue;
     private static AxMetrics metrics;
-
-//    public static ThreadedQueue<Runnable> getThreadedQueue() {
-//        return threadedQueue;
-//    }
 
     public static AxPlugin getInstance() {
         return instance;
     }
 
+    @Override
+    public void load() {
+        // remove legacy libs
+        File libs = new File(getDataFolder(), "libs");
+        if (libs.exists()) {
+            com.artillexstudios.axapi.utils.file.FileUtils.deleteNested(libs.toPath());
+        }
+        File lib = new File(getDataFolder(), "lib");
+        if (lib.exists()) {
+            com.artillexstudios.axapi.utils.file.FileUtils.deleteNested(lib.toPath());
+        }
+    }
+
+    @Override
     public void enable() {
         instance = this;
 
@@ -78,12 +87,13 @@ public final class AxSellwands extends AxPlugin {
         if (CONFIG.getBoolean("update-notifier.enabled", true)) new UpdateNotifier();
     }
 
+    @Override
     public void disable() {
         if (metrics != null) metrics.cancel();
     }
 
+    @Override
     public void updateFlags() {
-        FeatureFlags.USE_LEGACY_HEX_FORMATTER.set(false);
         FeatureFlags.PACKET_ENTITY_TRACKER_ENABLED.set(true);
         FeatureFlags.HOLOGRAM_UPDATE_TICKS.set(20L);
         FeatureFlags.PACKET_ENTITY_TRACKER_THREADS.set(1);
