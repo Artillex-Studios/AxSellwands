@@ -1,6 +1,7 @@
 package com.artillexstudios.axsellwands.commands.subcommands;
 
 import com.artillexstudios.axapi.utils.StringUtils;
+import com.artillexstudios.axsellwands.hooks.BuiltinPrices;
 import com.artillexstudios.axsellwands.hooks.HookManager;
 import com.artillexstudios.axsellwands.utils.NumberUtils;
 import org.bukkit.Bukkit;
@@ -40,6 +41,10 @@ public enum Reload {
         Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500╠ &#FFEEAALoaded &f" + com.artillexstudios.axsellwands.sellwands.Sellwands.getSellwands().size() + " &#FFEEAAsellwands!"));
 
         HookManager.reload();
+        BuiltinPrices builtinPrices = BuiltinPrices.INSTANCE;
+        if (builtinPrices != null) {
+            builtinPrices.reload();
+        }
         NumberUtils.reload();
 
         Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF5500╚ &#FFEEAASuccessful reload!"));

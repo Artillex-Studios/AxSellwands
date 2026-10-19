@@ -8,14 +8,15 @@ import com.artillexstudios.axapi.libs.boostedyaml.settings.updater.UpdaterSettin
 import com.artillexstudios.axintegrations.types.ShopIntegration;
 import com.artillexstudios.axsellwands.AxSellwands;
 import org.bukkit.inventory.ItemStack;
-import org.jspecify.annotations.NonNull;
-import org.jspecify.annotations.Nullable;
+import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Nullable;
 
 import java.io.File;
 import java.util.UUID;
 
 public class BuiltinPrices extends ShopIntegration {
-    private Config PRICES;
+    public static BuiltinPrices INSTANCE;
+    private static Config PRICES;
 
     public BuiltinPrices() {
         super("builtin");
@@ -26,31 +27,36 @@ public class BuiltinPrices extends ShopIntegration {
         return true;
     }
 
+    public void reload() {
+        if (PRICES != null) PRICES.reload();
+    }
+
     @Override
     public boolean setup() {
-        PRICES = new Config(new File(AxSellwands.getInstance().getDataFolder(), "prices.yml"), AxSellwands.getInstance().getResource("prices.yml"), GeneralSettings.builder().setUseDefaults(false).build(), LoaderSettings.builder().build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setKeepAll(true).build());
+        if (PRICES == null) PRICES = new Config(new File(AxSellwands.getInstance().getDataFolder(), "prices.yml"), AxSellwands.getInstance().getResource("prices.yml"), GeneralSettings.builder().setUseDefaults(false).build(), LoaderSettings.builder().build(), DumperSettings.DEFAULT, UpdaterSettings.builder().setKeepAll(true).build());
+        INSTANCE = this;
         return PRICES.getBackingDocument() != null;
     }
 
     @Override
-    public @Nullable Double getBuyPrice(@NonNull ItemStack itemStack) {
+    public @Nullable Double getBuyPrice(@NotNull ItemStack itemStack) {
         return getSellPrice(itemStack);
     }
 
     @Override
-    public @Nullable Double getBuyPrice(UUID uuid, @NonNull ItemStack itemStack) {
+    public @Nullable Double getBuyPrice(UUID uuid, @NotNull ItemStack itemStack) {
         return getSellPrice(uuid, itemStack);
     }
 
     @Override
-    public @Nullable Double getSellPrice(@NonNull ItemStack itemStack) {
+    public @Nullable Double getSellPrice(@NotNull ItemStack itemStack) {
         Double price = PRICES.getBackingDocument().getDouble(itemStack.getType().name());
         if (price == null || price <= 0) return null;
         return price * itemStack.getAmount();
     }
 
     @Override
-    public @Nullable Double getSellPrice(UUID uuid, @NonNull ItemStack itemStack) {
+    public @Nullable Double getSellPrice(UUID uuid, @NotNull ItemStack itemStack) {
         return getSellPrice(itemStack);
     }
 }
