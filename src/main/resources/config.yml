@@ -12,6 +12,12 @@ stacking-mode: 1
 # if true: when merging two sell wands, their usage limit can go over the limit
 allow-going-over-limit: false
 
+# what should sell wands do when using the left/right mouse buttons on a container
+# possible actions: sell (sell all items from container), inspect (display the worth of the items inside a container), none (disable action)
+actions:
+  left: "inspect"
+  right: "sell"
+
 # what event priority should the plugin use? if everything is working, you don't have to touch this
 # however if some plugin is overriding your sell wands, you can try setting this to LOWEST
 # values: LOWEST, LOW, NORMAL, HIGH, HIGHEST, MONITOR
@@ -58,4 +64,4 @@ update-notifier:
   on-join: true
 
 # do not change this
-version: 7
+version: 8

@@ -23,7 +23,7 @@ import static com.artillexstudios.axsellwands.AxSellwands.LANG;
 
 public class HologramUtils {
 
-    public static void spawnHologram(@NotNull Player player, @NotNull Location location, HashMap<String, String> replacements) {
+    public static void spawnHologram(@NotNull Player player, @NotNull Location location, Map<String, String> replacements) {
         Vector diff = location.toVector().subtract(player.getLocation().toVector());
         diff.subtract(diff.clone().normalize());
         location = player.getLocation().toVector().add(diff).toLocation(location.getWorld());

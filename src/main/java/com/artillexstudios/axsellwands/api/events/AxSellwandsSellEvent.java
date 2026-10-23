@@ -1,25 +1,30 @@
 package com.artillexstudios.axsellwands.api.events;
 
 import org.bukkit.Bukkit;
+import org.bukkit.Material;
 import org.bukkit.entity.Player;
-import org.bukkit.event.Cancellable;
 import org.bukkit.event.Event;
 import org.bukkit.event.HandlerList;
 import org.jetbrains.annotations.NotNull;
+import org.jetbrains.annotations.Unmodifiable;
 
-public class AxSellwandsSellEvent extends Event implements Cancellable {
+import java.util.Collections;
+import java.util.Map;
+
+public class AxSellwandsSellEvent extends Event {
     private static final HandlerList handlerList = new HandlerList();
     private final Player player;
     private double moneyMade;
     private final int itemsSold;
-    private boolean isCancelled = false;
+    private final Map<Material, Integer> soldItems;
 
-    public AxSellwandsSellEvent(@NotNull Player player, double moneyMade, int itemsSold) {
+    public AxSellwandsSellEvent(@NotNull Player player, double moneyMade, int itemsSold, Map<Material, Integer> soldItems) {
         super(!Bukkit.isPrimaryThread());
 
         this.player = player;
         this.moneyMade = moneyMade;
         this.itemsSold = itemsSold;
+        this.soldItems = Collections.unmodifiableMap(soldItems);
     }
 
     @NotNull
@@ -49,13 +54,8 @@ public class AxSellwandsSellEvent extends Event implements Cancellable {
         this.moneyMade = moneyMade;
     }
 
-    @Override
-    public boolean isCancelled() {
-        return isCancelled;
-    }
-
-    @Override
-    public void setCancelled(boolean isCancelled) {
-        this.isCancelled = isCancelled;
+    @Unmodifiable
+    public Map<Material, Integer> getSoldItems() {
+        return soldItems;
     }
 }
