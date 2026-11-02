@@ -233,10 +233,10 @@ public class SellwandAction {
     private void logSell() {
         StringBuilder str = new StringBuilder("[");
         boolean first = true;
-        for (Map.Entry<Material, Integer> e : soldItems.entrySet()) {
+        for (Map.Entry<Material, Integer> entry : soldItems.entrySet()) {
             if (!first) str.append(", ");
             first = false;
-            str.append(e.getValue()).append("x ").append(e.getKey().name());
+            str.append(entry.getValue()).append("x ").append(entry.getKey().name());
         }
         str.append("]");
         HistoryUtils.writeToHistory(String.format("%s sold %dx items %s and earned %s (multiplier: %s, uses: %d)", player.getName(), processedAmount, str, processedPrice, multiplier, uses - 1));

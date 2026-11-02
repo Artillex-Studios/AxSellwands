@@ -28,6 +28,16 @@ interact-listener-priority: NORMAL
 # 0 used to be the default in vanilla minecraft until 1.13
 minimum-durability: 1
 
+# should the plugin log sellwand sales?
+logging:
+  # create a folder into the plugin's directory and saves logs to .log files every day
+  file:
+    enabled: true
+    path: "logs"
+  # prints log messages into the console
+  console:
+    enabled: false
+
 number-formatting:
   # modes:
   # 0 - formatted (customizable, look at the formatted part)
@@ -64,4 +74,4 @@ update-notifier:
   on-join: true
 
 # do not change this
-version: 8
+version: 9
