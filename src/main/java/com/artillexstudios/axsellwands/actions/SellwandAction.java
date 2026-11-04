@@ -14,6 +14,7 @@ import com.artillexstudios.axintegrations.types.CurrencyIntegration;
 import com.artillexstudios.axintegrations.types.ProtectionIntegration;
 import com.artillexstudios.axintegrations.types.ShopIntegration;
 import com.artillexstudios.axsellwands.api.events.AxSellwandsSellEvent;
+import com.artillexstudios.axsellwands.hooks.ExcellentShopLimits;
 import com.artillexstudios.axsellwands.sellwands.Sellwand;
 import com.artillexstudios.axsellwands.utils.HistoryUtils;
 import com.artillexstudios.axsellwands.utils.HologramUtils;
@@ -51,6 +52,7 @@ public class SellwandAction {
     private final ClickType clickType;
     private ShopIntegration shopIntegration;
     private CurrencyIntegration currencyIntegration;
+    private ExcellentShopLimits excellentShop;
     private ItemStack[] contents;
     private final Set<ActionType> actions = new HashSet<>();
     private UUID uuid;
@@ -99,10 +101,17 @@ public class SellwandAction {
 
     private void inspect() {
         for (ItemStack it : contents) {
-            Double price = getPrice(it);
-            if (price == null) continue;
-            processedAmount += it.getAmount();
-            processedPrice += price;
+            if (excellentShop != null) {
+                ExcellentShopLimits.Quote quote = excellentShop.quote(player, it, multiplier, true);
+                if (quote == null) continue;
+                processedAmount += quote.items();
+                processedPrice += quote.price();
+            } else {
+                Double price = getPrice(it);
+                if (price == null) continue;
+                processedAmount += it.getAmount();
+                processedPrice += price;
+            }
         }
         if (!anyProcessed()) return;
         print(ActionType.INSPECT);
@@ -110,14 +119,24 @@ public class SellwandAction {
 
     private void sell() {
         for (ItemStack it : contents) {
-            Double price = getPrice(it);
-            if (price == null) continue;
-            processedAmount += it.getAmount();
+            int count;
+            double price;
+            if (excellentShop != null) {
+                ExcellentShopLimits.Quote quote = excellentShop.quote(player, it, multiplier, false);
+                if (quote == null) continue;
+                count = quote.items();
+                price = quote.price();
+                excellentShop.record(quote);
+            } else {
+                Double normalPrice = getPrice(it);
+                if (normalPrice == null) continue;
+                count = it.getAmount();
+                price = normalPrice;
+            }
+            processedAmount += count;
             processedPrice += price;
-
-            int amount = soldItems.computeIfAbsent(it.getType(), k -> 0);
-            soldItems.put(it.getType(), amount + it.getAmount());
-            it.setAmount(0);
+            soldItems.merge(it.getType(), count, Integer::sum);
+            it.setAmount(it.getAmount() - count);
         }
         if (!anyProcessed()) return;
         callSellEvent();
@@ -145,6 +164,18 @@ public class SellwandAction {
         if (shopIntegration == null) {
             Bukkit.getConsoleSender().sendMessage(StringUtils.formatToString("&#FF0000[AxSellwands] No shop plugin selected in the hooks.yml!"));
             return false;
+        }
+        if (shopIntegration.getName().equalsIgnoreCase("ExcellentShop")) {
+            if (!shopIntegration.getClass().getSimpleName().equals("ExcellentShop51Shop")) {
+                Bukkit.getLogger().severe("[AxSellwands] ExcellentShop limits require version 5.1.x; sale blocked to prevent a limit bypass.");
+                return false;
+            }
+            try {
+                excellentShop = new ExcellentShopLimits();
+            } catch (RuntimeException | LinkageError e) {
+                Bukkit.getLogger().severe("[AxSellwands] Cannot initialize ExcellentShop limit support; sale blocked: " + e);
+                return false;
+            }
         }
         return true;
     }

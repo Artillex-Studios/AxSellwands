@@ -6,3 +6,4 @@ folia-supported: true
 
 softdepend:
   - PlaceholderAPI
+  - ExcellentShop
